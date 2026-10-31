@@ -1,0 +1,575 @@
+
+/* ==========================================
+   SMARTWASTE DISPATCH
+   File: css/style.css
+   Purpose: Website design and responsive layout
+========================================== */
+
+
+/* 1. GLOBAL SETTINGS */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --green: #176b45;
+    --green-dark: #105638;
+    --green-light: #e9f5ed;
+
+    --orange: #ed9b24;
+    --red: #dc4949;
+    --blue: #2879e8;
+
+    --text: #1e3027;
+    --muted: #758078;
+    --border: #e5eae6;
+    --background: #f5f7f5;
+    --white: #ffffff;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 90px;
+}
+
+button,
+a {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #70a98a;
+    outline-offset: 3px;
+}
+
+
+/* 2. HEADER AND BRAND */
+
+.topbar {
+    background: var(--white);
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    background: var(--green-light);
+    color: var(--green);
+    border-radius: 14px;
+    font-size: 27px;
+    flex-shrink: 0;
+}
+
+.brand h1 {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.brand p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+
+/* 3. HEADER BUTTONS */
+
+.location-btn,
+.refresh-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 15px;
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 700;
+    transition: background 0.2s ease;
+}
+
+.location-btn:hover,
+.refresh-btn:hover {
+    background: #d9eddf;
+}
+
+
+/* 4. MAIN CONTENT LAYOUT */
+
+main {
+    width: 100%;
+    max-width: 1000px;
+    margin: 25px auto;
+    padding: 0 18px;
+}
+
+.map-section,
+.results {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(25, 60, 40, 0.035);
+}
+
+
+/* 5. SECTION HEADINGS */
+
+.map-heading,
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.map-heading h2,
+.section-heading h2 {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.map-heading p,
+.section-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 6px;
+}
+
+
+/* 6. DEMO LABEL */
+
+.live-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    background: var(--green-light);
+    color: var(--green);
+    padding: 8px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.live-label span {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: #25a65a;
+    border-radius: 50%;
+}
+
+
+/* 7. INTERACTIVE LEAFLET MAP */
+
+#map {
+    width: 100%;
+    height: 380px;
+    background: #e6eee7;
+    border-radius: 14px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.leaflet-container {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.leaflet-popup-content {
+    line-height: 1.6;
+}
+
+
+/* 8. MAP MARKER LEGEND */
+
+.map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    padding-top: 15px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.map-legend span {
+    display: inline-flex;
+    align-items: center;
+}
+
+.dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.dot.green {
+    background: #249b58;
+}
+
+.dot.orange {
+    background: var(--orange);
+}
+
+.dot.red {
+    background: var(--red);
+}
+
+
+/* 9. RECOMMENDED BIN CARD */
+
+.bin-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.bin-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.bin-name {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.bin-address {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 7px;
+}
+
+
+/* 10. BIN AVAILABILITY STATUS */
+
+.status {
+    display: inline-block;
+    padding: 7px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status.available {
+    color: var(--green);
+    background: #e5f6e9;
+}
+
+.status.full {
+    color: #b82f2f;
+    background: #fdeaea;
+}
+
+
+/* 11. DISTANCE AND FILL LEVEL */
+
+.bin-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin: 22px 0;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+
+/* 12. BIN CAPACITY PROGRESS BAR */
+
+.progress {
+    width: 100%;
+    height: 9px;
+    background: #edf0ed;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 9px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background: #249b58;
+    border-radius: 20px;
+    transition: width 0.35s ease;
+}
+
+
+/* 13. GET DIRECTIONS BUTTON */
+
+.directions-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 22px;
+
+    background: var(--green);
+    color: var(--white);
+
+    border: none;
+    border-radius: 11px;
+
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+
+    transition: background 0.2s ease;
+}
+
+.directions-btn:hover {
+    background: var(--green-dark);
+}
+
+
+/* 14. LOADING AND STATUS MESSAGES */
+
+.loading {
+    padding: 18px 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.message {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 13px;
+    overflow-wrap: anywhere;
+}
+
+
+/* 15. FIXED BOTTOM NAVIGATION */
+
+.bottom-nav {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    padding: 11px 8px;
+    padding-bottom: max(11px, env(safe-area-inset-bottom));
+
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 15px rgba(25, 60, 40, 0.04);
+
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    min-width: 75px;
+    padding: 4px;
+
+    background: transparent;
+    border: none;
+
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.nav-item span {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.nav-item.active {
+    color: var(--green);
+    font-weight: 700;
+}
+
+
+/* 16. TABLET AND MOBILE RESPONSIVENESS */
+
+@media (max-width: 600px) {
+
+    .topbar {
+        padding: 14px;
+        gap: 8px;
+    }
+
+    .brand {
+        gap: 8px;
+    }
+
+    .brand-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 23px;
+        border-radius: 12px;
+    }
+
+    .brand h1 {
+        font-size: 17px;
+    }
+
+    .brand p {
+        font-size: 10px;
+    }
+
+    .location-btn {
+        padding: 10px;
+        font-size: 11px;
+    }
+
+    main {
+        margin: 15px auto;
+        padding: 0 10px;
+    }
+
+    .map-section,
+    .results {
+        padding: 14px;
+        border-radius: 15px;
+        margin-bottom: 14px;
+    }
+
+    .map-heading,
+    .section-heading {
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .map-heading h2,
+    .section-heading h2 {
+        font-size: 16px;
+    }
+
+    .map-heading p,
+    .section-heading p {
+        font-size: 11px;
+    }
+
+    .live-label {
+        padding: 7px;
+        font-size: 9px;
+    }
+
+    #map {
+        height: 330px;
+        border-radius: 12px;
+    }
+
+    .map-legend {
+        gap: 10px;
+        font-size: 10px;
+    }
+
+    .bin-card {
+        padding: 14px;
+    }
+
+    .bin-name {
+        font-size: 15px;
+    }
+
+    .bin-address {
+        font-size: 12px;
+    }
+
+    .bin-stats {
+        gap: 22px;
+        margin: 18px 0;
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .refresh-btn {
+        padding: 10px;
+        font-size: 11px;
+    }
+
+    .bottom-nav {
+        padding-top: 10px;
+    }
+}
+
+
+/* 17. EXTRA SMALL SCREENS */
+
+@media (max-width: 360px) {
+
+    .brand h1 {
+        font-size: 15px;
+    }
+
+    .brand p {
+        font-size: 9px;
+    }
+
+    .location-btn {
+        padding: 9px 7px;
+        font-size: 10px;
+    }
+
+    .map-legend {
+        gap: 8px;
+    }
+
+    .map-legend span {
+        font-size: 9px;
+    }
+
+    .live-label {
+        font-size: 8px;
+    }
+}
