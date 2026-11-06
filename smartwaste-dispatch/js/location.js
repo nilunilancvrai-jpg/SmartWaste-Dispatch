@@ -4,49 +4,26 @@
   File: js/location.js
 
   Purpose:
-  1. Request the user's location.
+  1. Automatically request the user's live location.
   2. Return latitude and longitude.
   3. Handle permission errors and timeouts.
-
-  Note:
-  GPS access normally requires localhost or HTTPS.
 */
 
 window.SmartWaste = window.SmartWaste || {};
 
-
-/**
- * Get the user's current location.
- *
- * Usage:
- * SmartWaste.getUserLocation()
- *     .then(location => console.log(location))
- *     .catch(error => console.error(error.message));
- *
- * Success result:
- * {
- *     lat: 12.9716,
- *     lng: 77.5946
- * }
- */
 window.SmartWaste.getUserLocation = function () {
 
     return new Promise(function (resolve, reject) {
 
-        // Check whether the browser supports GPS location.
         if (!navigator.geolocation) {
-            reject(
-                new Error(
-                    "Your browser does not support location services."
-                )
-            );
+            reject(new Error(
+                "Your browser does not support location services."
+            ));
             return;
         }
 
-        // Ask the browser for the user's current position.
         navigator.geolocation.getCurrentPosition(
 
-            // Called when location access succeeds.
             function (position) {
 
                 const location = {
@@ -54,14 +31,11 @@ window.SmartWaste.getUserLocation = function () {
                     lng: position.coords.longitude
                 };
 
-                console.log(
-                    "SmartWaste: User location received."
-                );
+                console.log("SmartWaste: Live location received.", location);
 
                 resolve(location);
             },
 
-            // Called when location access fails.
             function (error) {
 
                 let message;
@@ -69,37 +43,33 @@ window.SmartWaste.getUserLocation = function () {
                 switch (error.code) {
 
                     case error.PERMISSION_DENIED:
-                        message =
-                            "Location permission denied. Allow location access in your browser settings.";
+                        message = "Location permission denied. Allow location access in Chrome settings.";
                         break;
 
                     case error.POSITION_UNAVAILABLE:
-                        message =
-                            "Your location is unavailable. Check your device location settings and try again.";
+                        message = "Location unavailable. Check your device's location settings.";
                         break;
 
                     case error.TIMEOUT:
-                        message =
-                            "The location request timed out. Please try again.";
+                        message = "Location request timed out. Please try again.";
                         break;
 
                     default:
-                        message =
-                            "Unable to get your location. Please try again.";
+                        message = "Unable to detect your location.";
                 }
+
+                console.error("SmartWaste GPS Error:", error.code, error.message);
 
                 reject(new Error(message));
             },
 
-            // Location request settings.
             {
                 enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 30000
+                timeout: 30000,
+                maximumAge: 0
             }
         );
     });
 };
-
 
 console.log("SmartWaste: Location module loaded.");
