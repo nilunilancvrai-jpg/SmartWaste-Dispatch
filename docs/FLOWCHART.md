@@ -1,4 +1,7 @@
 
+# SmartWaste Dispatch – Overall System Flowchart
+
+```mermaid
 flowchart TD
     A([START]) --> B[Open SmartWaste Dispatch]
     B --> C{Select User Mode}
@@ -19,13 +22,14 @@ flowchart TD
     L -->|Yes| O[Select Nearest Suitable Bin]
     O --> P[Display Recommended Bin and Distance]
     P --> Q{Request Walking Directions?}
-    Q -->|No| R[Continue Monitoring Location]
-    Q -->|Yes| S[Calculate Walking Route]
-    S --> T[Display Route on Map]
-    T --> U[Monitor User Location]
-    U --> V{User Moved Significantly?}
-    V -->|Yes| S
-    V -->|No| U
+    Q -->|Yes| R[Calculate Walking Route]
+    R --> S[Display Route on Map]
+    S --> T[Monitor User Location]
+    T --> U{User Moved Significantly?}
+    U -->|Yes| R
+    U -->|No| T
+    Q -->|No| V[Continue Monitoring Location]
+    V --> T
 
     C -->|Collection Worker| W[Open Worker Dashboard]
     W --> X[View Bin Information]
@@ -39,5 +43,4 @@ flowchart TD
     AD --> AE[Monitor Worker Operations]
     AE --> AF[View Operational Information]
     AF --> AB
-
-    R --> AB
+```
