@@ -1,225 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07543d">
-
-  <title>SmartWaste Dispatch</title>
-
-  <link rel="stylesheet" href="css/style.css">
-
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css">
-</head>
-
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b2118">
+<title>SmartWaste Dispatch | Find a bin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"><link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"></head>
 <body>
-
-  <header class="topbar">
-    <a class="brand" href="#">
-      <span class="brand-icon">♻</span>
-
-      <span class="brand-copy">
-        <span class="brand-name">SmartWaste</span>
-        <span class="brand-tagline">
-          Cleaner streets, smarter cities
-        </span>
-      </span>
-    </a>
-
-    <div class="header-actions">
-      <button id="locateBtn"
-        class="button button-secondary"
-        type="button">
-        ◎ Retry location
+<header class="app-header"><a class="wordmark" href="index.html"><span class="brand-mark" aria-hidden="true"><i class="ti ti-recycle"></i></span><span>SmartWaste <small>DISPATCH</small></span></a><nav class="role-nav"><span class="role-current">Public finder</span><span>Live bin availability</span></nav><div class="header-actions"><span class="connection-pill"><i></i> SUPABASE WORKSPACE</span><button id="refreshBtn" class="button button-quiet" type="button"><i class="ti ti-refresh" aria-hidden="true"></i> Refresh</button><button id="locateBtn" class="button button-primary" type="button"><i class="ti ti-current-location" aria-hidden="true"></i> Locate me</button><button id="profileBtn" class="button button-profile" type="button"><i class="ti ti-user-circle" aria-hidden="true"></i> Profile</button></div></header>
+<section id="waste-intake" class="waste-intake" aria-labelledby="intakeTitle" hidden>
+  <div class="intake-orbit orbit-one"></div><div class="intake-orbit orbit-two"></div>
+  <div class="intake-content">
+    <div class="intake-brand"><span class="brand-mark"><i class="ti ti-recycle"></i></span><span>SMARTWASTE <b>DISPATCH</b></span></div>
+    <div class="intake-kicker"><span></span> SMARTER WASTE DISPOSAL</div>
+    <h1 id="intakeTitle">How much waste<br><em>do you have?</em></h1>
+    <p class="intake-copy">Choose the amount you want to dispose of. We’ll help you find a nearby bin with enough available capacity.</p>
+    <div class="waste-options">
+      <button class="waste-option" type="button" data-waste-size="small">
+        <span class="waste-art small-art"><i class="ti ti-trash"></i></span>
+        <span class="waste-option-text"><strong>Small amount</strong><small>A bag, a few items or everyday waste</small></span>
+        <span class="option-arrow"><i class="ti ti-arrow-up-right"></i></span>
+      </button>
+      <button class="waste-option" type="button" data-waste-size="medium">
+        <span class="waste-art medium-art"><i class="ti ti-trash"></i></span>
+        <span class="waste-option-text"><strong>Medium waste</strong><small>Several bags or a household-sized load</small></span>
+        <span class="option-arrow"><i class="ti ti-arrow-up-right"></i></span>
+      </button>
+      <button class="waste-option" type="button" data-waste-size="large">
+        <span class="waste-art large-art"><i class="ti ti-truck"></i></span>
+        <span class="waste-option-text"><strong>Large / bulky waste</strong><small>Furniture, appliances or multiple large bags</small></span>
+        <span class="option-arrow"><i class="ti ti-arrow-up-right"></i></span>
       </button>
     </div>
-  </header>
-
-
-  <main class="page-shell">
-
-    <section class="welcome-section">
-      <div class="welcome-copy">
-        <p class="eyebrow">SMART WASTE DISCOVERY</p>
-
-        <h1>Find a suitable bin near you.</h1>
-
-        <p class="welcome-description">
-          Discover nearby waste bins with available capacity
-          and get walking directions to the best option.
-        </p>
-      </div>
-    </section>
-
-
-    <div class="content-grid">
-
-      <!-- MAP -->
-      <section class="panel map-panel">
-
-        <div class="panel-heading">
-          <div>
-            <p class="eyebrow">EXPLORE YOUR AREA</p>
-            <h2>Nearby waste bins</h2>
-
-            <p class="panel-description">
-              View your location and suitable nearby bins.
-            </p>
-          </div>
-
-          <span class="demo-badge">
-            DEMO DATA
-          </span>
-        </div>
-
-        <div class="map-frame">
-          <div id="map"></div>
-        </div>
-
-        <div class="map-footer">
-          <div class="map-legend">
-            <span class="legend-item">
-              <i class="dot green"></i> Available
-            </span>
-
-            <span class="legend-item">
-              <i class="dot orange"></i> Nearly full
-            </span>
-
-            <span class="legend-item">
-              <i class="dot red"></i> Full
-            </span>
-
-            <span class="legend-item">
-              <i class="dot grey"></i> Unavailable
-            </span>
-          </div>
-        </div>
-
-      </section>
-
-
-      <!-- RECOMMENDATION -->
-      <aside class="side-column">
-
-        <section class="panel recommendation-panel">
-
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">YOUR NEXT STOP</p>
-              <h2>Recommended bin</h2>
-
-              <p class="panel-description">
-                Nearest suitable bin based on its availability.
-              </p>
-            </div>
-
-            <span class="recommendation-icon">⌖</span>
-          </div>
-
-
-          <div class="recommendation-toolbar">
-
-            <span class="freshness-label">
-              <span></span>
-              Bin information
-            </span>
-
-            <button id="refreshBtn"
-              class="button button-quiet"
-              type="button">
-              ↻ Refresh
-            </button>
-
-          </div>
-
-
-          <!-- JavaScript inserts the recommended bin here -->
-          <div id="binCard" class="bin-card">
-
-            <div class="empty-state">
-              <span class="empty-state-icon">⌖</span>
-
-              <p class="loading">
-                Finding a suitable nearby bin...
-              </p>
-            </div>
-
-          </div>
-
-
-          <p id="message"
-            class="message"
-            role="status"
-            aria-live="polite">
-            Requesting your location...
-          </p>
-
-        </section>
-
-      </aside>
-
-    </div>
-
-
-    <footer class="page-footer">
-      <span>SmartWaste Dispatch</span>
-
-      <span>
-        Student project · Demonstration data,
-        not live municipal sensor data
-      </span>
-    </footer>
-
-  </main>
-
-
-  <!-- SIMPLE NAVIGATION -->
-  <nav class="bottom-nav">
-
-    <button class="nav-item active"
-      id="exploreBtn"
-      type="button">
-      <span class="nav-icon">⌖</span>
-      <span>Explore</span>
-    </button>
-
-    <button class="nav-item"
-      id="allBinsBtn"
-      type="button">
-      <span class="nav-icon">▦</span>
-      <span>Nearby bins</span>
-    </button>
-
-    <!-- Retained for JavaScript compatibility, hidden from users -->
-    <button id="locationNavBtn"
-      type="button"
-      hidden>
-      My location
-    </button>
-
-  </nav>
-
-
-  <!-- SCRIPTS: KEEP THIS ORDER -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-
-  <script src="data/sample-bins.js"></script>
-
-  <script src="js/distance.js"></script>
-  <script src="js/location.js"></script>
-  <script src="js/storage.js"></script>
-  <script src="js/binService.js"></script>
-  <script src="js/recommendation.js"></script>
-  <script src="js/workerActions.js"></script>
-  <script src="js/routing.js"></script>
-  <script src="js/app.js"></script>
-
-</body>
-</html>
+    <div class="intake-foot"><i class="ti ti-leaf"></i> Find a suitable bin. Keep your neighbourhood clean.</div>
+  </div>
+  <div class="intake-visual" aria-hidden="true">
+    <div class="visual-glow"></div><div class="visual-ring ring-a"></div><div class="visual-ring ring-b"></div>
+    <div class="floating-leaf leaf-a"><i class="ti ti-leaf"></i></div><div class="floating-leaf leaf-b"><i class="ti ti-leaf"></i></div>
+    <div class="waste-illustration"><div class="bin-lid"></div><div class="bin-body"><i class="ti ti-recycle"></i><span>SMART<br>WASTE</span></div><div class="bin-shadow"></div></div>
+    <div class="visual-caption"><span class="caption-dot"></span> LOCAL WASTE NETWORK <b>● READY</b></div>
+  </div>
+</section>
+<section id="waste-actions" class="waste-actions" hidden aria-live="polite">
+  <button id="backToWaste" class="back-link" type="button"><i class="ti ti-arrow-left"></i> Change waste amount</button>
+  <div class="action-heading"><div class="eyebrow"><i></i> YOUR NEXT STEP</div><h2 id="actionTitle">Choose how to continue</h2><p id="actionDescription">Select an option for your waste.</p></div>
+  <div id="actionChoices" class="action-choices"></div>
+</section>
+<main id="dashboardContent" class="public-layout"><section class="public-intro"><div><div class="eyebrow"><i></i> PUBLIC BIN FINDER</div><h1>Waste smarter.<br><span>Live cleaner.</span></h1><p>Find the nearest waste station with room for more.</p></div><div class="intro-note"><span class="note-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></span><span><strong>Location-aware recommendations</strong><small>Recommendations use your current location and the latest bin data.</small></span></div></section>
+<section class="waste-quick-pick" aria-label="Choose waste amount">
+  <div class="quick-pick-copy"><strong>What do you need to dispose of?</strong><span>Choose an amount to see the right next step.</span></div>
+  <div class="quick-pick-options">
+    <button class="quick-waste-option" type="button" data-waste-size="small"><i class="ti ti-trash"></i><span>Small</span></button>
+    <button class="quick-waste-option" type="button" data-waste-size="medium"><i class="ti ti-trash"></i><span>Medium</span></button>
+    <button class="quick-waste-option" type="button" data-waste-size="large"><i class="ti ti-truck"></i><span>Large</span></button>
+  </div>
+</section>
+<section class="map-shell"><div class="map-toolbar"><div class="map-title"><strong>Nearby waste stations</strong><span id="locationLabel">Location not set</span></div><div class="map-actions"><button id="allBinsBtn" class="button button-quiet" type="button">Show all bins</button><button id="locationNavBtn" class="button button-quiet" type="button">My location</button></div></div><div id="map"></div><div class="map-legend"><span><i class="ti ti-trash legend-available"></i> Available · under 80%</span><span><i class="ti ti-trash legend-near"></i> Near capacity · 80–94%</span><span><i class="ti ti-trash legend-full"></i> Critical · 95%+</span></div><div id="message" class="map-message" role="status" aria-live="polite"></div></section>
+<aside class="recommendation-panel"><div class="recommendation-head"><div><div class="eyebrow"><i class="ti ti-sparkles" aria-hidden="true"></i> RECOMMENDED FOR YOU</div><h2>Nearest suitable bin</h2><p>Based on distance and available capacity.</p></div><span class="live-tag"><i></i> DATABASE</span></div><div id="binCard" class="bin-card"><div class="empty-state"><span class="empty-symbol"><i class="ti ti-recycle" aria-hidden="true"></i></span><strong>Find a suitable bin</strong><p>Allow location access to discover the nearest available waste station.</p><button class="button button-primary" id="emptyLocateBtn" type="button">Find bins near me</button></div></div><div class="recommendation-foot"><span>Capacity rule</span><strong>Only bins below 80% are recommended.</strong></div></aside>
+</main><footer id="dashboardFooter" class="app-footer"><span>SmartWaste Dispatch</span><span>Cleaner neighbourhoods, coordinated collections.</span></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabaseClient.js"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script><script src="js/distance.js"></script><script src="js/location.js"></script><script src="js/supabaseData.js"></script><script src="js/recommendation.js"></script><script src="js/routing.js"></script><script src="js/mapMarkers.js"></script><script src="js/app.js"></script>
+</body></html>

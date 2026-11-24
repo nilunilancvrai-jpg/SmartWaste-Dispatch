@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary-container":"#047d45","on-error-container":"#ffdad6","surface-container-high":"#262b26","surface-container-low":"#171d18","secondary":"#a9d0b1","error-container":"#93000a","tertiary-fixed-dim":"#ffb2b7","primary":"#77db99","background":"#0f1510","secondary-fixed":"#c5eccc","on-tertiary":"#610f1f","on-primary-container":"#bbffcc","on-error":"#690005","on-secondary":"#143721","on-primary":"#00391c","inverse-on-surface":"#2c322c","on-tertiary-container":"#ffeaeb","surface":"#0f1510","error":"#ffb4ab","surface-container-lowest":"#0a0f0b","surface-bright":"#353b35","on-surface-variant":"#becabd","primary-fixed-dim":"#77db99","on-background":"#dee4dc","on-secondary-container":"#9bc2a3","inverse-surface":"#dee4dc","inverse-primary":"#006d3b","on-primary-fixed":"#00210e","surface-container-highest":"#303631","on-surface":"#dee4dc","tertiary":"#ffb2b7","on-tertiary-fixed-variant":"#7f2734","surface-variant":"#303631","primary-fixed":"#93f8b3","surface-container":"#1b211c","outline-variant":"#3e4940","on-secondary-fixed":"#00210e","surface-dim":"#0f1510","on-secondary-fixed-variant":"#2c4e36","tertiary-fixed":"#ffdadb","outline":"#889488","on-primary-fixed-variant":"#00522b","secondary-fixed-dim":"#a9d0b1","on-tertiary-fixed":"#40000e","tertiary-container":"#b04c57","surface-tint":"#77db99","secondary-container":"#2e5038"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-2xl":"3rem","space-xl":"2rem","space-xs":"0.25rem","margin-md":"1.5rem","margin":"1.0rem","gutter":"1rem","space-lg":"1.5rem","space-md":"1rem","gutter-md":"1.5rem","margin-lg":"2.5rem","space-sm":"0.5rem","gutter-lg":"2rem"},fontFamily:{"label-sm":["Inter"],"headline-sm":["Manrope"],"headline-xl-mobile":["Manrope"],"body-md":["Inter"],"body-sm":["Inter"],"headline-lg-mobile":["Manrope"],"headline-xl":["Manrope"],"label-lg":["Inter"],"body-lg":["Inter"],"label-md":["Inter"],"headline-lg":["Manrope"],"headline-md":["Manrope"]},fontSize:{"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.03em",fontWeight:"500"}],"headline-sm":["18px",{lineHeight:"26px",letterSpacing:"-0.005em",fontWeight:"600"}],"headline-xl-mobile":["30px",{lineHeight:"36px",letterSpacing:"-0.015em",fontWeight:"700"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"body-sm":["13px",{lineHeight:"18px",fontWeight:"400"}],"headline-lg-mobile":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-xl":["40px",{lineHeight:"48px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.01em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"600"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.015em",fontWeight:"600"}],"headline-md":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col justify-between selection:bg-primary selection:text-on-primary transition-colors duration-500 overflow-x-hidden"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/30 shadow-[0_1px_12px_rgba(0,0,0,0.3)]"><div class="h-16 w-full px-gutter-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center text-primary shadow-sm shadow-primary/20"><span class="material-symbols-outlined text-[22px]">local_shipping</span></div><div class="flex flex-col"><div class="flex items-center gap-2"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">SmartWaste <span class="text-primary font-normal">Dispatch</span></span><span class="hidden md:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono tracking-wider bg-surface-container text-secondary border border-outline-variant/40">US-EAST-4</span></div><span class="text-[11px] font-label-sm text-on-surface-variant/80 hidden sm:block">Municipal Ecological Fleet Telemetry</span></div></div><nav class="hidden md:flex items-center gap-space-lg" data-active-classes="text-primary font-semibold"><a aria-current="page" class="transition-colors text-primary font-semibold flex items-center gap-1.5" data-path="sign-in" href="#"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>Sign In</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="field-activation" href="#">Field Activation</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="system-status" href="#">System Status</a></nav><div class="flex items-center gap-space-md"><div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-surface-container border border-outline-variant/40"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span></span><span class="text-[12px] font-label-md text-on-surface">Network &amp; GPS Online</span></div><button class="w-8 h-8 rounded-lg bg-surface-container border border-outline-variant/50 text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center" id="audio-toggle-btn" onclick="toggleAudioFx()" title="Toggle Terminal Audio" type="button"><span class="material-symbols-outlined text-[18px]" id="audio-icon">volume_up</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-md shadow-primary/20"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 flex-1 flex flex-col"><div class="flex flex-col w-full relative min-h-[calc(100vh-4rem)]">
+<!-- Panoramic Dark Environment with 3D Smart Dustbin Model -->
+<div class="relative w-full min-h-[calc(100vh-4rem)] flex flex-col lg:flex-row bg-surface overflow-hidden">
+<div class="absolute inset-0 pointer-events-none transition-all duration-700 z-0 opacity-80" id="ambient-backdrop" style="background: radial-gradient(circle at 25% 40%, rgba(4, 125, 69, 0.28) 0%, transparent 60%), radial-gradient(circle at 80% 60%, rgba(119, 219, 153, 0.14) 0%, transparent 65%);"></div>
+<!-- Civic Ecology Subtle Grid Overlay -->
+<svg class="absolute inset-0 w-full h-full opacity-25 pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="44" id="matrix-grid" patternunits="userSpaceOnUse" width="44">
+<circle cx="2" cy="2" fill="#77db99" r="0.9"></circle>
+<path d="M 44 0 L 0 0 0 44" fill="none" stroke="#262b26" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#matrix-grid)" height="100%" width="100%"></rect>
+</svg>
+<!-- Embedded 3D Smart Dustbin Scene spanning across background -->
+<!-- STITCH_THREEJS_START:ANIMATION_50 class="absolute inset-0 w-full h-full pointer-events-none" -->
+<div class="absolute inset-0 w-full h-full pointer-events-none" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_50" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_50');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Self-contained Three.js 3D Smart Dustbin Model with high-visibility lighting & interactive controls
+const container = document.getElementById('threejs-container') || document.body;
+const width = container.clientWidth || window.innerWidth || 800;
+const height = container.clientHeight || window.innerHeight || 600;
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 1000);
+camera.position.set(0, 1.5, 5.0);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.35;
+container.appendChild(renderer.domElement);
+
+// Global control state for real-time interactivity
+window.binState = window.binState || {
+  lidOpen: false,
+  autoCycle: true,
+  rotationSpeed: 1.0,
+  lightMode: 'emerald', // 'emerald', 'cyan', 'amber'
+  simulatedFill: 0.42,
+  triggerPing: false
+};
+
+// Rich multi-directional lighting setup (guarantees 100% visibility on dark background)
+const ambientLight = new THREE.AmbientLight(0x064e3b, 2.8);
+scene.add(ambientLight);
+
+const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
+keyLight.position.set(4, 8, 6);
+scene.add(keyLight);
+
+const fillLight = new THREE.DirectionalLight(0x10b981, 2.0);
+fillLight.position.set(-5, 4, 3);
+scene.add(fillLight);
+
+const rimLight = new THREE.PointLight(0x34d399, 6.0, 15);
+rimLight.position.set(0, 4, -3);
+scene.add(rimLight);
+
+const sensorGlowLight = new THREE.PointLight(0x10b981, 4.5, 12);
+sensorGlowLight.position.set(0, 1.2, 2.2);
+scene.add(sensorGlowLight);
+
+const floorGlowLight = new THREE.PointLight(0x059669, 5.0, 10);
+floorGlowLight.position.set(0, -0.6, 0);
+scene.add(floorGlowLight);
+
+// Hero Group
+const heroGroup = new THREE.Group();
+heroGroup.position.set(0, -0.3, 0);
+heroGroup.scale.set(1.15, 1.15, 1.15);
+scene.add(heroGroup);
+
+// Materials (Using vibrant MeshPhongMaterial to prevent black silhouettes)
+const binBodyMat = new THREE.MeshPhongMaterial({
+  color: 0x065f46,
+  emissive: 0x022c22,
+  specular: 0x34d399,
+  shininess: 90
+});
+
+const trimDarkMat = new THREE.MeshPhongMaterial({
+  color: 0x0f291e,
+  specular: 0x10b981,
+  shininess: 70
+});
+
+const lidMat = new THREE.MeshPhongMaterial({
+  color: 0x047857,
+  specular: 0x6ee7b7,
+  shininess: 110
+});
+
+const screenBezelMat = new THREE.MeshPhongMaterial({
+  color: 0x0a1f16,
+  specular: 0x34d399,
+  shininess: 120
+});
+
+const digitalScreenMat = new THREE.MeshPhongMaterial({
+  color: 0x021a11,
+  emissive: 0x04432c,
+  shininess: 150
+});
+
+const emeraldGlowMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
+const mintGlowMat = new THREE.MeshBasicMaterial({ color: 0x6ee7b7 });
+const cyanNeonMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+
+// Dustbin Cylindrical Main Body
+const bodyGeo = new THREE.CylinderGeometry(1.05, 0.88, 2.4, 48);
+const binBody = new THREE.Mesh(bodyGeo, binBodyMat);
+binBody.position.y = 1.2;
+heroGroup.add(binBody);
+
+// Decorative Reinforcement Rings
+const ringGeo1 = new THREE.TorusGeometry(1.04, 0.045, 16, 54);
+const ring1 = new THREE.Mesh(ringGeo1, trimDarkMat);
+ring1.rotation.x = Math.PI / 2;
+ring1.position.y = 0.5;
+heroGroup.add(ring1);
+
+const ringGeo2 = new THREE.TorusGeometry(1.02, 0.045, 16, 54);
+const ring2 = new THREE.Mesh(ringGeo2, trimDarkMat);
+ring2.rotation.x = Math.PI / 2;
+ring2.position.y = 1.85;
+heroGroup.add(ring2);
+
+// Front Digital HUD Screen Plate
+const screenPlate = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.95, 0.12), screenBezelMat);
+screenPlate.position.set(0, 1.45, 1.02);
+heroGroup.add(screenPlate);
+
+const screenGlass = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.82, 0.05), digitalScreenMat);
+screenGlass.position.set(0, 1.45, 1.07);
+heroGroup.add(screenGlass);
+
+// Telemetry Fill Level Bar
+const fillBar = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.07, 0.06), mintGlowMat);
+fillBar.position.set(0, 1.35, 1.10);
+heroGroup.add(fillBar);
+
+// Status indicator beacon
+const beacon = new THREE.Mesh(new THREE.SphereGeometry(0.045, 16, 16), emeraldGlowMat);
+beacon.position.set(0.18, 1.68, 1.10);
+heroGroup.add(beacon);
+
+// Ultrasonic sensor ring
+const sensorEmitter = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.065, 0.04, 24), trimDarkMat);
+sensorEmitter.rotation.x = Math.PI / 2;
+sensorEmitter.position.set(-0.16, 1.68, 1.09);
+heroGroup.add(sensorEmitter);
+
+// Ultrasonic Ping shockwave
+const pingWaveGeo = new THREE.RingGeometry(0.06, 0.09, 32);
+const pingWaveMat = new THREE.MeshBasicMaterial({ color: 0x34d399, transparent: true, opacity: 0, side: THREE.DoubleSide });
+const pingWave = new THREE.Mesh(pingWaveGeo, pingWaveMat);
+pingWave.position.set(-0.16, 1.68, 1.11);
+heroGroup.add(pingWave);
+
+// Glowing Halo Collar
+const collarGeo = new THREE.TorusGeometry(1.10, 0.035, 16, 54);
+const collar = new THREE.Mesh(collarGeo, mintGlowMat);
+collar.rotation.x = Math.PI / 2;
+collar.position.y = 2.41;
+heroGroup.add(collar);
+
+// Lid Assembly (Hinged Group)
+const lidPivot = new THREE.Group();
+lidPivot.position.set(0, 2.45, -0.85);
+heroGroup.add(lidPivot);
+
+const lidMesh = new THREE.Mesh(new THREE.CylinderGeometry(1.14, 1.10, 0.16, 48), lidMat);
+lidMesh.position.set(0, 0.08, 0.85);
+lidPivot.add(lidMesh);
+
+const handleMesh = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.08, 0.14), trimDarkMat);
+handleMesh.position.set(0, 0.18, 0.85);
+lidPivot.add(handleMesh);
+
+// Heavy Base Pedestal
+const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(1.36, 1.52, 0.22, 48), trimDarkMat);
+pedestal.position.y = -0.11;
+heroGroup.add(pedestal);
+
+const pedestalHalo = new THREE.Mesh(new THREE.TorusGeometry(1.44, 0.032, 16, 54), emeraldGlowMat);
+pedestalHalo.rotation.x = Math.PI / 2;
+pedestalHalo.position.y = -0.01;
+heroGroup.add(pedestalHalo);
+
+// Ambient Floating Telemetry Dust/Particles
+const pCount = 50;
+const pGeo = new THREE.BufferGeometry();
+const pPos = new Float32Array(pCount * 3);
+const pSpeeds = [];
+
+for (let i = 0; i < pCount; i++) {
+  pPos[i * 3] = (Math.random() - 0.5) * 6.0;
+  pPos[i * 3 + 1] = Math.random() * 4.5 - 0.5;
+  pPos[i * 3 + 2] = (Math.random() - 0.5) * 5.0;
+  pSpeeds.push({
+    x: (Math.random() - 0.5) * 0.005,
+    y: 0.005 + Math.random() * 0.007,
+    z: (Math.random() - 0.5) * 0.005,
+    phase: Math.random() * Math.PI * 2
+  });
+}
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+const pMat = new THREE.PointsMaterial({
+  color: 0x34d399,
+  size: 0.09,
+  transparent: true,
+  opacity: 0.85,
+  blending: THREE.AdditiveBlending
+});
+const particles = new THREE.Points(pGeo, pMat);
+scene.add(particles);
+
+// Interactive Mouse Orbit
+let mouseX = 0, mouseY = 0;
+let targetRotX = 0, targetRotY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+window.addEventListener('resize', () => {
+  const w = container.clientWidth || window.innerWidth;
+  const h = container.clientHeight || window.innerHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+});
+
+// Render Animation Loop
+const clock = new THREE.Clock();
+let currentLidAngle = 0;
+let pingScale = 1.0;
+
+function animate() {
+  requestAnimationFrame(animate);
+  const elapsed = clock.getElapsedTime();
+  const speed = (window.binState && window.binState.rotationSpeed) || 1.0;
+
+  targetRotX += (mouseX - targetRotX) * 0.06;
+  targetRotY += (mouseY - targetRotY) * 0.06;
+
+  // Orbit rotation
+  heroGroup.rotation.y = Math.sin(elapsed * 0.5 * speed) * 0.2 + targetRotX * 0.45;
+  heroGroup.rotation.x = Math.cos(elapsed * 0.4 * speed) * 0.04 - targetRotY * 0.2;
+  heroGroup.position.y = -0.3 + Math.sin(elapsed * 1.5) * 0.05;
+
+  // Lid Actuation Logic
+  let targetAngle = 0;
+  if (window.binState && !window.binState.autoCycle) {
+    targetAngle = window.binState.lidOpen ? -0.9 : 0;
+  } else {
+    const cycle = Math.sin(elapsed * 1.2 * speed);
+    targetAngle = cycle > 0.4 ? -(cycle - 0.4) * 0.65 : 0;
+  }
+  currentLidAngle += (targetAngle - currentLidAngle) * 0.12;
+  lidPivot.rotation.x = currentLidAngle;
+
+  // Real-time Lighting Modes
+  if (window.binState) {
+    if (window.binState.lightMode === 'cyan') {
+      rimLight.color.setHex(0x06b6d4);
+      sensorGlowLight.color.setHex(0x38bdf8);
+      pedestalHalo.material.color.setHex(0x0ea5e9);
+      pMat.color.setHex(0x38bdf8);
+      collar.material.color.setHex(0x38bdf8);
+    } else if (window.binState.lightMode === 'amber') {
+      rimLight.color.setHex(0xf59e0b);
+      sensorGlowLight.color.setHex(0xfbbf24);
+      pedestalHalo.material.color.setHex(0xd97706);
+      pMat.color.setHex(0xfbbf24);
+      collar.material.color.setHex(0xfbbf24);
+    } else {
+      rimLight.color.setHex(0x34d399);
+      sensorGlowLight.color.setHex(0x10b981);
+      pedestalHalo.material.color.setHex(0x10b981);
+      pMat.color.setHex(0x34d399);
+      collar.material.color.setHex(0x6ee7b7);
+    }
+
+    // Dynamic Fill Bar Adjustment
+    const fillTarget = window.binState.simulatedFill || 0.42;
+    fillBar.scale.x = fillTarget * 1.8;
+  }
+
+  // Ultrasonic Ping Shockwave Animation
+  if (window.binState && window.binState.triggerPing) {
+    pingScale += 0.09;
+    pingWave.scale.set(pingScale, pingScale, 1);
+    pingWaveMat.opacity = Math.max(0, 1.0 - (pingScale - 1) * 0.45);
+    if (pingWaveMat.opacity <= 0) {
+      pingScale = 1.0;
+      window.binState.triggerPing = false;
+    }
+  }
+
+  // Floating particles
+  const positions = pGeo.attributes.position.array;
+  for (let i = 0; i < pCount; i++) {
+    const s = pSpeeds[i];
+    positions[i * 3 + 1] += s.y * speed;
+    positions[i * 3] += Math.sin(elapsed * 1.2 + s.phase) * 0.003;
+    if (positions[i * 3 + 1] > 3.8) {
+      positions[i * 3 + 1] = -0.3;
+    }
+  }
+  pGeo.attributes.position.needsUpdate = true;
+
+  renderer.render(scene, camera);
+}
+animate();
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_50 -->
+<!-- Gradient Vignette Overlay to ensure text readability -->
+<div class="absolute inset-0 bg-gradient-to-r from-surface/90 via-surface/40 to-surface/85 pointer-events-none z-[1]"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-surface/40 pointer-events-none z-[1]"></div>
+<!-- Ambient Atmospheric Glows -->
+<div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-primary/15 blur-[128px] pointer-events-none z-[1]"></div>
+<div class="absolute bottom-0 right-1/4 w-[32rem] h-[32rem] rounded-full bg-secondary-container/20 blur-[160px] pointer-events-none z-[1]"></div>
+<!-- LEFT COLUMN: Environmental Storytelling & Interactive Control Deck -->
+<div class="relative z-10 w-full lg:w-[56%] flex flex-col justify-between p-margin-md sm:p-margin-lg lg:p-space-2xl min-h-[620px] lg:min-h-full">
+<!-- Storytelling Header -->
+<div class="flex flex-col gap-space-md max-w-xl">
+<div class="inline-flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-container-high/80 border border-outline-variant/40 backdrop-blur-md shadow-sm w-fit">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">Simulated Sensor Fleet · 99.4% Uptime</span>
+<span class="text-outline-variant font-body-sm">|</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">NYC District 04 &amp; 09</span>
+</div>
+<div class="space-y-space-xs">
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight leading-tight font-extrabold">
+          Intelligent Waste Management for a <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-fixed to-secondary">Cleaner Tomorrow.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg leading-relaxed pt-1">
+          Find bins, orchestrate dynamic routes, and monitor fleet load balancing across municipal sectors with zero friction.
+        </p>
+</div>
+</div>
+<!-- Center/Lower Control Deck & Telemetry Tray -->
+<div class="flex flex-col gap-space-md max-w-xl mt-space-xl lg:mt-auto pt-space-md">
+<!-- 3D Telemetry & Visual Controls Deck -->
+<div class="p-space-md rounded-xl bg-surface-container-high/80 backdrop-blur-xl border border-outline-variant/50 shadow-xl shadow-black/40 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between border-b border-outline-variant/30 pb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-semibold">3D Sensor Actuation &amp; Telemetry Rig</span>
+</div>
+<span class="text-[11px] font-mono text-secondary px-2 py-0.5 rounded bg-surface-container-lowest border border-outline-variant/30">Node #81-BIN</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-1">
+<!-- Lid Actuation Buttons -->
+<div class="flex flex-col gap-1.5">
+<span class="text-[11px] font-label-sm text-on-surface-variant font-medium">Lid Actuation</span>
+<div class="grid grid-cols-2 gap-1.5">
+<button class="px-2 py-1.5 rounded-lg border border-primary bg-primary-container/40 text-on-primary-container text-[12px] font-label-md font-semibold transition-all hover:bg-primary-container flex items-center justify-center gap-1 active:scale-95 shadow-sm" id="ctrl-autocycle" onclick="toggleAutoCycle()" type="button">
+<span class="material-symbols-outlined text-[15px]">autorenew</span>
+<span>Auto Cycle</span>
+</button>
+<button class="px-2 py-1.5 rounded-lg border border-outline-variant/50 bg-surface-container text-on-surface hover:border-primary text-[12px] font-label-md transition-all active:scale-95 flex items-center justify-center gap-1" id="ctrl-ping" onclick="triggerPingWave()" type="button">
+<span class="material-symbols-outlined text-[15px] text-primary">sensors</span>
+<span>Ping</span>
+</button>
+</div>
+</div>
+<!-- Orbit Speed Selector -->
+<div class="flex flex-col gap-1.5">
+<span class="text-[11px] font-label-sm text-on-surface-variant font-medium">Orbit Speed</span>
+<div class="grid grid-cols-3 gap-1 bg-surface-container-low p-1 rounded-lg border border-outline-variant/40" id="speed-btn-group">
+<button class="speed-btn py-1 rounded text-[11px] font-mono text-on-surface-variant hover:text-on-surface transition-all" onclick="setOrbitSpeed(0.5, this)" type="button">0.5x</button>
+<button class="speed-btn py-1 rounded text-[11px] font-mono bg-primary text-on-primary font-bold shadow-sm transition-all" onclick="setOrbitSpeed(1.0, this)" type="button">1.0x</button>
+<button class="speed-btn py-1 rounded text-[11px] font-mono text-on-surface-variant hover:text-on-surface transition-all" onclick="setOrbitSpeed(2.0, this)" type="button">2.0x</button>
+</div>
+</div>
+<!-- Lighting Rig Presets -->
+<div class="flex flex-col gap-1.5">
+<span class="text-[11px] font-label-sm text-on-surface-variant font-medium">Lighting Rig</span>
+<div class="grid grid-cols-3 gap-1 bg-surface-container-low p-1 rounded-lg border border-outline-variant/40" id="lighting-rig-group">
+<button class="light-btn py-1 rounded text-[11px] font-label-sm font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 transition-all" onclick="setLightRig('emerald', this)" type="button">Emerald</button>
+<button class="light-btn py-1 rounded text-[11px] font-label-sm font-normal text-on-surface-variant hover:text-cyan-300 transition-all" onclick="setLightRig('cyan', this)" type="button">Cyan</button>
+<button class="light-btn py-1 rounded text-[11px] font-label-sm font-normal text-on-surface-variant hover:text-amber-300 transition-all" onclick="setLightRig('amber', this)" type="button">Amber</button>
+</div>
+</div>
+</div>
+<!-- Simulated Fill Level Slider -->
+<div class="flex flex-col gap-1 pt-1 border-t border-outline-variant/20">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-label-sm text-on-surface-variant font-medium">Simulated Capacity Fill Level</span>
+<span class="text-[12px] font-mono font-bold text-primary" id="slider-fill-readout">42.8%</span>
+</div>
+<input class="w-full h-1.5 bg-surface-container-lowest rounded-lg appearance-none cursor-pointer accent-primary" id="fill-slider" max="98" min="5" oninput="handleFillSlider(this.value)" type="range" value="43"/>
+</div>
+</div>
+<!-- Live GIS Telemetry Metrics Strip -->
+<div class="grid grid-cols-3 gap-space-sm p-space-md rounded-xl bg-surface-container-high/70 backdrop-blur-lg border border-outline-variant/40 shadow-lg shadow-black/30">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">Real-time Fill</span>
+<span class="font-headline-sm text-headline-sm text-on-surface mt-0.5" id="telemetry-fill-text">42.8%</span>
+<span class="font-label-sm text-label-sm text-primary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span> -12% avg
+          </span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">Active Trucks</span>
+<span class="font-headline-sm text-headline-sm text-on-surface mt-0.5">18 / 20</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Grid Route Opt</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">CO₂ Offsets</span>
+<span class="font-headline-sm text-headline-sm text-primary mt-0.5">3.4t</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Target Met</span>
+</div>
+</div>
+<!-- Ambient Page Mood & Lighting Presets Deck -->
+<div class="flex flex-col gap-space-xs p-space-sm rounded-xl bg-surface-container-high/60 backdrop-blur-xl border border-outline-variant/30 shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">palette</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold">Ambient Page Mood</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary px-space-xs py-0.5 rounded-full bg-primary/10 border border-primary/20" id="current-mood-badge">Emerald Dawn</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-1" id="mood-preset-group">
+<button class="mood-btn flex items-center gap-1.5 px-2 py-1.5 rounded-lg border border-primary bg-primary/15 text-on-surface font-label-sm text-label-sm transition-all duration-300 shadow-sm shadow-primary/20 hover:scale-[1.02] active:scale-[0.98]" id="mood-btn-emerald" onclick="setPageMood('emerald')" type="button">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+<span class="truncate">Emerald Dawn</span>
+</button>
+<button class="mood-btn flex items-center gap-1.5 px-2 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-low/70 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-all duration-300 hover:border-cyan-400/50 hover:bg-cyan-950/20 hover:scale-[1.02] active:scale-[0.98]" id="mood-btn-cyber-cyan" onclick="setPageMood('cyber-cyan')" type="button">
+<span class="w-2.5 h-2.5 rounded-full bg-cyan-400 opacity-60"></span>
+<span class="truncate">Cyber Cyan</span>
+</button>
+<button class="mood-btn flex items-center gap-1.5 px-2 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-low/70 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-all duration-300 hover:border-amber-400/50 hover:bg-amber-950/20 hover:scale-[1.02] active:scale-[0.98]" id="mood-btn-solar-amber" onclick="setPageMood('solar-amber')" type="button">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-400 opacity-60"></span>
+<span class="truncate">Solar Amber</span>
+</button>
+<button class="mood-btn flex items-center gap-1.5 px-2 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-low/70 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-all duration-300 hover:border-purple-400/50 hover:bg-purple-950/20 hover:scale-[1.02] active:scale-[0.98]" id="mood-btn-deep-twilight" onclick="setPageMood('deep-twilight')" type="button">
+<span class="w-2.5 h-2.5 rounded-full bg-purple-400 opacity-60"></span>
+<span class="truncate">Deep Twilight</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Glassmorphic Authentication Terminal -->
+<div class="w-full lg:w-[44%] flex items-center justify-center p-gutter sm:p-gutter-md lg:p-margin-lg relative z-20">
+<div class="w-full max-w-md rounded-xl bg-surface-container/90 backdrop-blur-2xl shadow-2xl shadow-black/70 p-space-lg sm:p-space-xl border border-outline-variant/40 transition-all duration-300 relative" id="auth-card-panel">
+<!-- Portal Top Status Badge -->
+<div class="flex items-center justify-between pb-space-sm mb-space-md border-b border-outline-variant/30">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-mono text-[11px] uppercase tracking-wider text-primary font-semibold">• DISPATCH PORTAL SECURED</span>
+</div>
+<span class="font-mono text-[11px] text-on-surface-variant/80 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">graphic_eq</span> AUDIO FX
+        </span>
+</div>
+<!-- Workflow State Segment Switcher -->
+<div class="flex items-center justify-between p-1 bg-surface-container-low rounded-lg mb-space-lg border border-outline-variant/30">
+<button class="flex-1 py-1.5 px-space-xs text-center rounded font-label-md text-label-md transition-all duration-200 bg-primary-container text-on-primary font-semibold shadow-sm" id="tab-btn-signin" onclick="switchAuthView('signin')">
+          Sign In
+        </button>
+<button class="flex-1 py-1.5 px-space-xs text-center rounded font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-on-surface" id="tab-btn-signup" onclick="switchAuthView('signup')">
+          Create Account
+        </button>
+<button class="flex-1 py-1.5 px-space-xs text-center rounded font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-on-surface" id="tab-btn-forgot" onclick="switchAuthView('forgot')">
+          Recovery
+        </button>
+</div>
+<!-- 1. SIGN IN VIEW -->
+<div class="flex flex-col" id="view-signin">
+<div class="mb-space-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight font-bold">Welcome Back</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Sign in to continue to SmartWaste Dispatch.</p>
+</div>
+<form class="flex flex-col gap-space-md" id="form-signin" onsubmit="handleAuthSubmit(event, 'signin')">
+<!-- Email Field -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold" for="signin-email">Email Address</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">mail</span>
+<input class="w-full h-11 pl-10 pr-4 bg-surface-container-high rounded-lg text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-bright transition-all border border-outline-variant/30" id="signin-email" placeholder="operator@smartwaste.gov" required="" type="email" value="operator@smartwaste.gov"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold" for="signin-password">Password</label>
+<button class="font-label-sm text-label-sm text-primary hover:text-secondary-fixed transition-colors" onclick="switchAuthView('forgot')" type="button">Forgot Password?</button>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">lock</span>
+<input class="w-full h-11 pl-10 pr-10 bg-surface-container-high rounded-lg text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-bright transition-all border border-outline-variant/30" id="signin-password" placeholder="••••••••••••" required="" type="password" value="FleetSuperSafe2025!"/>
+<button class="absolute right-3 text-outline hover:text-on-surface transition-colors p-1 flex items-center justify-center" onclick="togglePasswordVisibility('signin-password', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Node Checkbox -->
+<label class="flex items-center gap-space-sm cursor-pointer py-0.5">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-high accent-primary-container text-primary cursor-pointer border-outline-variant" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant select-none">Remember this terminal session</span>
+</label>
+<!-- Submit Primary CTA -->
+<button class="w-full h-11 mt-space-xs rounded-lg bg-gradient-to-r from-secondary-container via-primary-container to-secondary-container hover:brightness-110 text-on-primary font-label-lg text-label-lg shadow-lg shadow-primary-container/30 transition-all duration-200 flex items-center justify-center gap-space-sm active:scale-[0.99]" id="btn-submit-signin" type="submit">
+<span class="flex items-center gap-1 font-semibold" id="btn-signin-text">Sign In →</span>
+<span class="hidden material-symbols-outlined text-[20px] animate-spin" id="btn-signin-spinner">progress_activity</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="flex items-center my-space-lg">
+<div class="flex-grow h-px bg-surface-container-highest"></div>
+<span class="px-space-sm font-label-sm text-label-sm text-outline uppercase tracking-wider">or continue with</span>
+<div class="flex-grow h-px bg-surface-container-highest"></div>
+</div>
+<!-- Social Auth: Google -->
+<button class="w-full h-11 rounded-lg bg-surface-container-high hover:bg-surface-bright border border-outline-variant/30 text-on-surface font-label-lg text-label-lg transition-all flex items-center justify-center gap-space-sm shadow-sm" onclick="triggerOAuthToast('Google')" type="button">
+<svg class="w-4 h-4" viewbox="0 0 24 24">
+<path d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.4l3.7 2.9C6.5 7.4 9 5 12 5z" fill="#EA4335"></path>
+<path d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z" fill="#4285F4"></path>
+<path d="M5.6 14.7c-.2-.7-.4-1.5-.4-2.7s.1-2 .4-2.7L1.9 6.4C.7 8.8 0 10.8 0 12s.7 3.2 1.9 5.6l3.7-2.9z" fill="#FBBC05"></path>
+<path d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.3L1.9 16C3.7 19.8 7.5 23 12 23z" fill="#34A853"></path>
+</svg>
+<span>Continue with Google</span>
+</button>
+<!-- Toggle Bottom Link -->
+<div class="mt-space-lg text-center font-body-sm text-body-sm text-on-surface-variant">
+          New to SmartWaste? 
+          <button class="text-primary hover:text-secondary-fixed font-semibold ml-1 transition-colors" onclick="switchAuthView('signup')">Create an account</button>
+</div>
+</div>
+<!-- 2. CREATE ACCOUNT VIEW (Registration) -->
+<div class="hidden flex-col" id="view-signup">
+<div class="mb-space-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight font-bold">Citizen Registration</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Register for direct neighborhood bin alerts and reporting.</p>
+</div>
+<form class="flex flex-col gap-space-sm" id="form-signup" onsubmit="handleAuthSubmit(event, 'signup')">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold" for="signup-name">Full Name</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">person</span>
+<input class="w-full h-10 pl-10 pr-4 bg-surface-container-high rounded-lg text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-bright transition-all border border-outline-variant/30" id="signup-name" placeholder="Elena Vance" required="" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold" for="signup-email">Email Address</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">mail</span>
+<input class="w-full h-10 pl-10 pr-4 bg-surface-container-high rounded-lg text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-bright transition-all border border-outline-variant/30" id="signup-email" placeholder="elena@citycouncil.org" required="" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold" for="signup-password">Create Password</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">lock</span>
+<input class="w-full h-10 pl-10 pr-10 bg-surface-container-high rounded-lg text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-bright transition-all border border-outline-variant/30" id="signup-password" placeholder="At least 8 characters" required="" type="password"/>
+<button class="absolute right-3 text-outline hover:text-on-surface transition-colors p-1 flex items-center justify-center" onclick="togglePasswordVisibility('signup-password', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold" for="signup-confirm-password">Confirm Password</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">verified_user</span>
+<input class="w-full h-10 pl-10 pr-4 bg-surface-container-high rounded-lg text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-bright transition-all border border-outline-variant/30" id="signup-confirm-password" placeholder="Repeat password" required="" type="password"/>
+</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-low text-secondary font-body-sm text-[12px] leading-tight border border-outline-variant/20">
+            Roles (Worker / Driver / Supervisor) are assigned securely via municipal SSO.
+          </div>
+<button class="w-full h-11 mt-space-xs rounded-lg bg-primary-container hover:bg-secondary-container text-on-primary font-label-lg text-label-lg shadow-md transition-all flex items-center justify-center gap-space-sm" id="btn-submit-signup" type="submit">
+<span id="btn-signup-text">Create Citizen Account</span>
+<span class="hidden material-symbols-outlined text-[20px] animate-spin" id="btn-signup-spinner">progress_activity</span>
+</button>
+</form>
+<div class="mt-space-lg text-center font-body-sm text-body-sm text-on-surface-variant">
+          Already registered? 
+          <button class="text-primary hover:text-secondary-fixed font-semibold ml-1" onclick="switchAuthView('signin')">Sign In</button>
+</div>
+</div>
+<!-- 3. FORGOT PASSWORD VIEW -->
+<div class="hidden flex-col" id="view-forgot">
+<div class="mb-space-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight font-bold">Terminal Recovery</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Enter your registered email to receive an instant authentication token.</p>
+</div>
+<form class="flex flex-col gap-space-md" id="form-forgot" onsubmit="handleAuthSubmit(event, 'forgot')">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-semibold" for="forgot-email">Account Email</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">mail</span>
+<input class="w-full h-11 pl-10 pr-4 bg-surface-container-high rounded-lg text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-bright transition-all border border-outline-variant/30" id="forgot-email" placeholder="name@municipality.gov" required="" type="email"/>
+</div>
+</div>
+<button class="w-full h-11 rounded-lg bg-primary-container hover:bg-secondary-container text-on-primary font-label-lg text-label-lg shadow-md transition-all flex items-center justify-center gap-space-sm" id="btn-submit-forgot" type="submit">
+<span id="btn-forgot-text">Send Recovery Token →</span>
+<span class="hidden material-symbols-outlined text-[20px] animate-spin" id="btn-forgot-spinner">progress_activity</span>
+</button>
+</form>
+<div class="mt-space-lg text-center font-body-sm text-body-sm text-on-surface-variant">
+          Remembered your credentials? 
+          <button class="text-primary hover:text-secondary-fixed font-semibold ml-1" onclick="switchAuthView('signin')">Back to Sign In</button>
+</div>
+</div>
+<!-- Feedback Alert Notification Area -->
+<div class="hidden mt-space-md p-space-sm rounded-lg bg-surface-container-high border-l-4 border-primary text-on-surface font-body-sm flex items-center gap-space-sm transition-all" id="auth-alert">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span id="auth-alert-message">Action processed successfully.</span>
+</div>
+</div>
+</div>
+</div>
+</div></main><footer class="w-full bg-surface-container-low border-t border-outline-variant/30 shadow-[0_-1px_12px_rgba(0,0,0,0.2)]"><div class="w-full px-gutter-lg py-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm font-label-sm text-label-sm text-on-surface-variant"><span class="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"></span><span>Operational Telemetry: Online &amp; Secured (Node 12-US)</span></div><div class="font-label-sm text-label-sm text-on-surface-variant text-center sm:text-right">© 2025 SmartWaste Municipal Fleet Logistics. All rights reserved.</div></div></footer>
+<script>
+  // Global 3D State Initialization
+  window.binState = window.binState || {
+    lidOpen: false,
+    autoCycle: true,
+    rotationSpeed: 1.0,
+    lightMode: 'emerald',
+    simulatedFill: 0.428,
+    triggerPing: false
+  };
+
+  let audioEnabled = true;
+
+  function toggleAudioFx() {
+    audioEnabled = !audioEnabled;
+    const icon = document.getElementById('audio-icon');
+    if (icon) {
+      icon.textContent = audioEnabled ? 'volume_up' : 'volume_off';
+    }
+    showAlert(audioEnabled ? 'Audio feedback enabled' : 'Audio feedback muted', 'info');
+  }
+
+  function playTone(freq = 440, duration = 0.08) {
+    if (!audioEnabled) return;
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    } catch(e) {}
+  }
+
+  // 3D Controls
+  function toggleAutoCycle() {
+    window.binState.autoCycle = !window.binState.autoCycle;
+    const btn = document.getElementById('ctrl-autocycle');
+    if (window.binState.autoCycle) {
+      btn.className = "px-2 py-1.5 rounded-lg border border-primary bg-primary-container/40 text-on-primary-container text-[12px] font-label-md font-semibold transition-all hover:bg-primary-container flex items-center justify-center gap-1 active:scale-95 shadow-sm";
+    } else {
+      btn.className = "px-2 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container text-on-surface-variant text-[12px] font-label-md transition-all hover:text-on-surface flex items-center justify-center gap-1 active:scale-95";
+      window.binState.lidOpen = !window.binState.lidOpen;
+    }
+    playTone(600, 0.06);
+  }
+
+  function triggerPingWave() {
+    window.binState.triggerPing = true;
+    playTone(880, 0.12);
+    const btn = document.getElementById('ctrl-ping');
+    btn.classList.add('border-primary', 'bg-primary/20', 'text-primary');
+    setTimeout(() => {
+      btn.classList.remove('border-primary', 'bg-primary/20', 'text-primary');
+    }, 400);
+  }
+
+  function setOrbitSpeed(speed, btn) {
+    window.binState.rotationSpeed = speed;
+    playTone(480, 0.05);
+    const btns = document.querySelectorAll('#speed-btn-group .speed-btn');
+    btns.forEach(b => {
+      b.className = "speed-btn py-1 rounded text-[11px] font-mono text-on-surface-variant hover:text-on-surface transition-all";
+    });
+    btn.className = "speed-btn py-1 rounded text-[11px] font-mono bg-primary text-on-primary font-bold shadow-sm transition-all";
+  }
+
+  function setLightRig(mode, btn) {
+    window.binState.lightMode = mode;
+    playTone(540, 0.05);
+    const btns = document.querySelectorAll('#lighting-rig-group .light-btn');
+    btns.forEach(b => {
+      b.className = "light-btn py-1 rounded text-[11px] font-label-sm font-normal text-on-surface-variant hover:text-on-surface transition-all";
+    });
+    if (mode === 'cyan') {
+      btn.className = "light-btn py-1 rounded text-[11px] font-label-sm font-semibold bg-cyan-950/80 text-cyan-300 border border-cyan-500/50 transition-all";
+    } else if (mode === 'amber') {
+      btn.className = "light-btn py-1 rounded text-[11px] font-label-sm font-semibold bg-amber-950/80 text-amber-300 border border-amber-500/50 transition-all";
+    } else {
+      btn.className = "light-btn py-1 rounded text-[11px] font-label-sm font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 transition-all";
+    }
+  }
+
+  function handleFillSlider(val) {
+    const fraction = val / 100;
+    window.binState.simulatedFill = fraction;
+    document.getElementById('slider-fill-readout').textContent = val + '%';
+    document.getElementById('telemetry-fill-text').textContent = val + '%';
+  }
+
+  function setPageMood(mood) {
+    playTone(520, 0.08);
+    const bg = document.getElementById('ambient-backdrop');
+    const badge = document.getElementById('current-mood-badge');
+    const allBtns = document.querySelectorAll('#mood-preset-group .mood-btn');
+    
+    allBtns.forEach(b => {
+      b.className = "mood-btn flex items-center gap-1.5 px-2 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-low/70 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]";
+    });
+
+    const activeBtn = document.getElementById('mood-btn-' + mood);
+    if (activeBtn) {
+      activeBtn.className = "mood-btn flex items-center gap-1.5 px-2 py-1.5 rounded-lg border border-primary bg-primary/15 text-on-surface font-label-sm text-label-sm transition-all duration-300 shadow-sm shadow-primary/20 hover:scale-[1.02] active:scale-[0.98]";
+    }
+
+    if (mood === 'cyber-cyan') {
+      bg.style.background = "radial-gradient(circle at 20% 35%, rgba(6, 182, 212, 0.28) 0%, transparent 60%), radial-gradient(circle at 80% 65%, rgba(14, 165, 233, 0.16) 0%, transparent 65%)";
+      badge.textContent = "Cyber Cyan";
+      window.binState.lightMode = 'cyan';
+    } else if (mood === 'solar-amber') {
+      bg.style.background = "radial-gradient(circle at 20% 35%, rgba(245, 158, 11, 0.25) 0%, transparent 60%), radial-gradient(circle at 80% 65%, rgba(217, 119, 6, 0.16) 0%, transparent 65%)";
+      badge.textContent = "Solar Amber";
+      window.binState.lightMode = 'amber';
+    } else if (mood === 'deep-twilight') {
+      bg.style.background = "radial-gradient(circle at 20% 35%, rgba(168, 85, 247, 0.25) 0%, transparent 60%), radial-gradient(circle at 80% 65%, rgba(79, 70, 229, 0.16) 0%, transparent 65%)";
+      badge.textContent = "Deep Twilight";
+      window.binState.lightMode = 'cyan';
+    } else {
+      bg.style.background = "radial-gradient(circle at 25% 40%, rgba(4, 125, 69, 0.28) 0%, transparent 60%), radial-gradient(circle at 80% 60%, rgba(119, 219, 153, 0.14) 0%, transparent 65%)";
+      badge.textContent = "Emerald Dawn";
+      window.binState.lightMode = 'emerald';
+    }
+  }
+
+  // Auth Switcher
+  function switchAuthView(viewName) {
+    playTone(640, 0.05);
+    const views = ['signin', 'signup', 'forgot'];
+    const tabs = {
+      signin: document.getElementById('tab-btn-signin'),
+      signup: document.getElementById('tab-btn-signup'),
+      forgot: document.getElementById('tab-btn-forgot')
+    };
+
+    views.forEach(v => {
+      const el = document.getElementById('view-' + v);
+      if (el) {
+        if (v === viewName) {
+          el.classList.remove('hidden');
+          el.classList.add('flex');
+        } else {
+          el.classList.add('hidden');
+          el.classList.remove('flex');
+        }
+      }
+    });
+
+    Object.keys(tabs).forEach(k => {
+      if (tabs[k]) {
+        if (k === viewName) {
+          tabs[k].className = "flex-1 py-1.5 px-space-xs text-center rounded font-label-md text-label-md transition-all duration-200 bg-primary-container text-on-primary font-semibold shadow-sm";
+        } else {
+          tabs[k].className = "flex-1 py-1.5 px-space-xs text-center rounded font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-on-surface";
+        }
+      }
+    });
+
+    const alertBox = document.getElementById('auth-alert');
+    if (alertBox) alertBox.classList.add('hidden');
+  }
+
+  function togglePasswordVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (!input || !icon) return;
+
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.textContent = 'visibility_off';
+    } else {
+      input.type = 'password';
+      icon.textContent = 'visibility';
+    }
+  }
+
+  function triggerOAuthToast(provider) {
+    playTone(700, 0.08);
+    showAlert('Connecting to ' + provider + ' SSO Identity Provider...', 'info');
+    setTimeout(() => {
+      playTone(920, 0.1);
+      showAlert('Identity verified. Routing to Municipal Dispatch...', 'success');
+    }, 1200);
+  }
+
+  function handleAuthSubmit(event, flow) {
+    event.preventDefault();
+    playTone(800, 0.08);
+    const btnText = document.getElementById('btn-' + flow + '-text');
+    const btnSpinner = document.getElementById('btn-' + flow + '-spinner');
+
+    if (btnText && btnSpinner) {
+      btnText.classList.add('opacity-0');
+      btnSpinner.classList.remove('hidden');
+    }
+
+    setTimeout(() => {
+      if (btnText && btnSpinner) {
+        btnText.classList.remove('opacity-0');
+        btnSpinner.classList.add('hidden');
+      }
+
+      if (flow === 'signin') {
+        playTone(960, 0.15);
+        showAlert('Authenticated as Dispatch Operator. Initializing HUD...', 'success');
+      } else if (flow === 'signup') {
+        playTone(850, 0.12);
+        showAlert('Citizen record created. Verification link sent to email.', 'success');
+        setTimeout(() => switchAuthView('signin'), 1800);
+      } else if (flow === 'forgot') {
+        playTone(750, 0.12);
+        showAlert('One-time bypass passkey sent to operational email.', 'success');
+      }
+    }, 900);
+  }
+
+  function showAlert(msg, type) {
+    const alertBox = document.getElementById('auth-alert');
+    const alertMsg = document.getElementById('auth-alert-message');
+    if (!alertBox || !alertMsg) return;
+
+    alertMsg.textContent = msg;
+    alertBox.classList.remove('hidden');
+  }
+</script>
+</body></html>

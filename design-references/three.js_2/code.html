@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_14 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_14" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_14');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Three.js Scene: 3D Intelligent Smart Dustbin with Glowing Telemetry & Ambient Eco-City Elements
+const container = document.getElementById('threejs-container') || document.body;
+const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000);
+camera.position.set(0, 1.8, 7.2);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.25;
+container.appendChild(renderer.domElement);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xd9f3e5, 1.2);
+scene.add(ambientLight);
+
+const dirLight = new THREE.DirectionalLight(0xffffff, 2.4);
+dirLight.position.set(6, 12, 8);
+dirLight.castShadow = true;
+dirLight.shadow.mapSize.width = 1024;
+dirLight.shadow.mapSize.height = 1024;
+scene.add(dirLight);
+
+// Emerald Accent Rim Light
+const rimLight = new THREE.PointLight(0x36a879, 4.5, 15);
+rimLight.position.set(-4, 3, -2);
+scene.add(rimLight);
+
+const glowLight = new THREE.PointLight(0x16834a, 3.0, 10);
+glowLight.position.set(0, 1.2, 2.5);
+scene.add(glowLight);
+
+// Group for Smart Bin Hero Object
+const binHeroGroup = new THREE.Group();
+binHeroGroup.position.set(0.1, -0.4, 0);
+scene.add(binHeroGroup);
+
+// Materials with Brand Colors: Deep Forest #105b38, Emerald #16834a, Soft Mint #eaf5ee
+const bodyMaterial = new THREE.MeshPhongMaterial({
+  color: 0x12482f,
+  specular: 0x48c78e,
+  shininess: 90,
+  flatShading: false
+});
+
+const darkTrimMaterial = new THREE.MeshPhongMaterial({
+  color: 0x0a2216,
+  specular: 0x24553b,
+  shininess: 60
+});
+
+const glassSensorMaterial = new THREE.MeshPhongMaterial({
+  color: 0x02150d,
+  specular: 0x55ffaa,
+  shininess: 120,
+  reflectivity: 0.9
+});
+
+const glowGlowMaterial = new THREE.MeshBasicMaterial({
+  color: 0x34d399
+});
+
+const lidMetallicMaterial = new THREE.MeshPhongMaterial({
+  color: 0x196340,
+  specular: 0x6ee7b7,
+  shininess: 100
+});
+
+// Bin Base / Body (Slightly tapered cylinder with rounded profile)
+const bodyGeo = new THREE.CylinderGeometry(1.08, 0.92, 2.5, 48);
+const binBody = new THREE.Mesh(bodyGeo, bodyMaterial);
+binBody.position.y = 1.25;
+binBody.castShadow = true;
+binBody.receiveShadow = true;
+binHeroGroup.add(binBody);
+
+// Decorative accent rings (Aerodynamic tech ribbing)
+const ringGeo = new THREE.TorusGeometry(1.05, 0.035, 16, 64);
+const accentRing1 = new THREE.Mesh(ringGeo, darkTrimMaterial);
+accentRing1.rotation.x = Math.PI / 2;
+accentRing1.position.y = 0.55;
+binHeroGroup.add(accentRing1);
+
+const accentRing2 = new THREE.Mesh(ringGeo, darkTrimMaterial);
+accentRing2.rotation.x = Math.PI / 2;
+accentRing2.position.y = 1.95;
+accentRing2.scale.set(1.03, 1.03, 1.03);
+binHeroGroup.add(accentRing2);
+
+// Digital Telemetry Bezel Display Panel on Bin Front
+const screenPlateGeo = new THREE.BoxGeometry(0.72, 0.95, 0.08);
+const screenPlate = new THREE.Mesh(screenPlateGeo, darkTrimMaterial);
+screenPlate.position.set(0, 1.5, 1.06);
+binHeroGroup.add(screenPlate);
+
+const screenGlassGeo = new THREE.BoxGeometry(0.62, 0.8, 0.03);
+const screenGlass = new THREE.Mesh(screenGlassGeo, glassSensorMaterial);
+screenGlass.position.set(0, 1.5, 1.11);
+binHeroGroup.add(screenGlass);
+
+// Holographic Fill Status Bar on Display
+const fillBarGeo = new THREE.BoxGeometry(0.48, 0.07, 0.04);
+const fillBar = new THREE.Mesh(fillBarGeo, glowGlowMaterial);
+fillBar.position.set(0, 1.4, 1.12);
+binHeroGroup.add(fillBar);
+
+// Pulsing Beacon Light Ring on upper rim
+const haloGeo = new THREE.TorusGeometry(1.12, 0.025, 16, 64);
+const haloRing = new THREE.Mesh(haloGeo, glowGlowMaterial);
+haloRing.rotation.x = Math.PI / 2;
+haloRing.position.y = 2.45;
+binHeroGroup.add(haloRing);
+
+// Bin Lid Assembly (Pivoting hinge lid for subtle smart opening animation)
+const lidPivot = new THREE.Group();
+lidPivot.position.set(0, 2.5, -0.9);
+binHeroGroup.add(lidPivot);
+
+const lidDiscGeo = new THREE.CylinderGeometry(1.15, 1.12, 0.16, 48);
+const binLid = new THREE.Mesh(lidDiscGeo, lidMetallicMaterial);
+binLid.position.set(0, 0.08, 0.9);
+binLid.castShadow = true;
+lidPivot.add(binLid);
+
+const lidHandleGeo = new THREE.CylinderGeometry(0.25, 0.28, 0.12, 32);
+const lidCap = new THREE.Mesh(lidHandleGeo, darkTrimMaterial);
+lidCap.position.set(0, 0.2, 0.9);
+lidPivot.add(lidCap);
+
+// Modern Ground Pedestal with Illuminated Sensor Perimeter
+const basePedestalGeo = new THREE.CylinderGeometry(1.4, 1.55, 0.2, 48);
+const pedestal = new THREE.Mesh(basePedestalGeo, darkTrimMaterial);
+pedestal.position.y = -0.1;
+pedestal.receiveShadow = true;
+binHeroGroup.add(pedestal);
+
+const pedestalRingGeo = new THREE.TorusGeometry(1.48, 0.03, 16, 64);
+const pedestalHalo = new THREE.Mesh(pedestalRingGeo, glowGlowMaterial);
+pedestalHalo.rotation.x = Math.PI / 2;
+pedestalHalo.position.y = -0.01;
+binHeroGroup.add(pedestalHalo);
+
+// Floating Eco Leaf / Sensor Particles in ambient atmosphere
+const particleCount = 28;
+const particleGeo = new THREE.BufferGeometry();
+const particlePositions = new Float32Array(particleCount * 3);
+const particleVelocities = [];
+
+for (let i = 0; i < particleCount; i++) {
+  const px = (Math.random() - 0.5) * 6;
+  const py = Math.random() * 4.5 - 0.5;
+  const pz = (Math.random() - 0.5) * 5;
+  particlePositions[i * 3] = px;
+  particlePositions[i * 3 + 1] = py;
+  particlePositions[i * 3 + 2] = pz;
+  particleVelocities.push({
+    x: (Math.random() - 0.5) * 0.005,
+    y: 0.004 + Math.random() * 0.006,
+    z: (Math.random() - 0.5) * 0.005,
+    phase: Math.random() * Math.PI * 2
+  });
+}
+particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+
+const particleMat = new THREE.PointsMaterial({
+  color: 0x5eead4,
+  size: 0.08,
+  transparent: true,
+  opacity: 0.75,
+  blending: THREE.AdditiveBlending
+});
+const particles = new THREE.Points(particleGeo, particleMat);
+scene.add(particles);
+
+// Dynamic Curved Collection Route Line on Ground
+const routeCurve = new THREE.CatmullRomCurve3([
+  new THREE.Vector3(-3.2, -0.15, 2.2),
+  new THREE.Vector3(-1.8, -0.15, 1.4),
+  new THREE.Vector3(0, -0.15, 1.8),
+  new THREE.Vector3(1.8, -0.15, 1.0),
+  new THREE.Vector3(3.2, -0.15, -0.8)
+]);
+const routeGeo = new THREE.TubeGeometry(routeCurve, 40, 0.03, 8, false);
+const routeMat = new THREE.MeshBasicMaterial({
+  color: 0x10b981,
+  transparent: true,
+  opacity: 0.65
+});
+const routeMesh = new THREE.Mesh(routeGeo, routeMat);
+scene.add(routeMesh);
+
+// Mini Eco Dispatch Vehicle traveling gently along the path
+const truckGroup = new THREE.Group();
+const truckBodyGeo = new THREE.BoxGeometry(0.35, 0.18, 0.2);
+const truckMat = new THREE.MeshPhongMaterial({ color: 0x16834a, specular: 0xffffff, shininess: 80 });
+const truckMesh = new THREE.Mesh(truckBodyGeo, truckMat);
+truckMesh.position.y = 0.1;
+truckGroup.add(truckMesh);
+const truckCabGeo = new THREE.BoxGeometry(0.14, 0.14, 0.18);
+const cabMesh = new THREE.Mesh(truckCabGeo, darkTrimMaterial);
+cabMesh.position.set(0.12, 0.2, 0);
+truckGroup.add(cabMesh);
+truckGroup.scale.set(0.7, 0.7, 0.7);
+scene.add(truckGroup);
+
+// Mouse parallax tracking
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+// Resize handler
+window.addEventListener('resize', () => {
+  const w = container.clientWidth || window.innerWidth;
+  const h = container.clientHeight || window.innerHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+});
+
+// Render Loop
+let clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  const elapsedTime = clock.getElapsedTime();
+
+  // Smooth mouse inertia
+  targetX += (mouseX - targetX) * 0.04;
+  targetY += (mouseY - targetY) * 0.04;
+
+  // Gentle Bin Levitation & Micro-rotation
+  binHeroGroup.rotation.y = Math.sin(elapsedTime * 0.4) * 0.12 + targetX * 0.25;
+  binHeroGroup.rotation.x = Math.cos(elapsedTime * 0.3) * 0.03 - targetY * 0.15;
+  binHeroGroup.position.y = -0.4 + Math.sin(elapsedTime * 1.2) * 0.06;
+
+  // Gentle Smart Lid Breathing / Ajar cycle
+  const lidCycle = Math.sin(elapsedTime * 0.8);
+  if (lidCycle > 0.4) {
+    lidPivot.rotation.x = -(lidCycle - 0.4) * 0.35; // Opens subtly
+  } else {
+    lidPivot.rotation.x = 0;
+  }
+
+  // Pulsing Halo Brightness
+  const pulseFactor = 0.7 + Math.sin(elapsedTime * 3.5) * 0.3;
+  haloRing.material.opacity = pulseFactor;
+  pedestalHalo.material.opacity = pulseFactor * 0.8;
+  glowLight.intensity = 2.0 + pulseFactor * 1.5;
+
+  // Animate mini truck along the spline route
+  const truckT = (elapsedTime * 0.06) % 1;
+  const pointOnRoute = routeCurve.getPointAt(truckT);
+  const tangent = routeCurve.getTangentAt(truckT);
+  truckGroup.position.copy(pointOnRoute);
+  truckGroup.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), tangent);
+
+  // Update floating particles
+  const positions = particleGeo.attributes.position.array;
+  for (let i = 0; i < particleCount; i++) {
+    const v = particleVelocities[i];
+    positions[i * 3 + 1] += v.y;
+    positions[i * 3] += Math.sin(elapsedTime + v.phase) * 0.003;
+    if (positions[i * 3 + 1] > 3.8) {
+      positions[i * 3 + 1] = -0.2;
+    }
+  }
+  particleGeo.attributes.position.needsUpdate = true;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_14 -->
+</body>
+</html>

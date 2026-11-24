@@ -1,71 +1,15 @@
-
-/*
-  SmartWaste Dispatch
-  File: js/binService.js
-
-  Purpose:
-  1. Load bin data.
-  2. Return all bins.
-  3. Find a bin by its ID.
-  4. Update a bin's details.
-*/
-
 window.SmartWaste = window.SmartWaste || {};
-
 window.SmartWaste.binService = {
-
-    // Get saved bins or use the sample data.
-    getAllBins: function () {
-        const savedBins = window.SmartWaste.storage.loadBins();
-
-        if (savedBins !== null) {
-            return savedBins;
-        }
-
-        return window.SmartWaste.sampleBins;
-    },
-
-    // Find a bin using its unique ID.
-    getBinById: function (binId) {
-        const bins = this.getAllBins();
-
-        return bins.find(function (bin) {
-            return bin.id === binId;
-        }) || null;
-    },
-
-    // Update an existing bin and save the changes.
-    updateBin: function (binId, updates) {
-        const bins = this.getAllBins();
-
-        const binIndex = bins.findIndex(function (bin) {
-            return bin.id === binId;
-        });
-
-        if (binIndex === -1) {
-            return false;
-        }
-
-        // Preserve the bin ID and apply allowed updates.
-        bins[binIndex] = {
-            ...bins[binIndex],
-            ...updates,
-            id: bins[binIndex].id
-        };
-
-        return window.SmartWaste.storage.saveBins(bins);
-    },
-
-    // Restore the original sample bin data.
-    resetBins: function () {
-        const sampleBins = window.SmartWaste.sampleBins;
-
-        return window.SmartWaste.storage.saveBins(
-            sampleBins.map(function (bin) {
-                return { ...bin };
-            })
-        );
-    }
+  getAllBins() {
+    const saved = window.SmartWaste.storage.loadBins();
+    if (saved !== null) return saved;
+    return (window.SmartWaste.sampleBins || []).map(bin => ({...bin}));
+  },
+  getBinById(id) { return this.getAllBins().find(bin => String(bin.id)===String(id)) || null; },
+  updateBin(id, updates) {
+    const bins=this.getAllBins(); const i=bins.findIndex(bin=>String(bin.id)===String(id));
+    if(i<0) return false; bins[i]={...bins[i],...updates,id:bins[i].id};
+    return window.SmartWaste.storage.saveBins(bins);
+  },
+  resetBins() { return window.SmartWaste.storage.saveBins((window.SmartWaste.sampleBins||[]).map(bin=>({...bin}))); }
 };
-
-console.log("SmartWaste: Bin service module loaded.");

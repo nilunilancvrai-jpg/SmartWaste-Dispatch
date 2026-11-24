@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_53 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_53" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_53');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Container detection
+const width = container.clientWidth || window.innerWidth || 800;
+const height = container.clientHeight || window.innerHeight || 600;
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 1000);
+camera.position.set(0, 1.3, 5.0);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.6;
+container.appendChild(renderer.domElement);
+
+// Global control state for real-time interactivity
+window.binState = window.binState || {
+  lidOpen: false,
+  autoCycle: true,
+  rotationSpeed: 1.0,
+  lightMode: 'emerald', // 'emerald', 'cyan', 'amber'
+  simulatedFill: 0.55,
+  triggerPing: false
+};
+
+// Vibrant Lighting Rig with strong contrast
+const ambientLight = new THREE.AmbientLight(0x064e3b, 3.5);
+scene.add(ambientLight);
+
+const keyLight = new THREE.DirectionalLight(0xffffff, 4.0);
+keyLight.position.set(5, 8, 6);
+scene.add(keyLight);
+
+const fillLight = new THREE.DirectionalLight(0x10b981, 2.8);
+fillLight.position.set(-6, 4, 3);
+scene.add(fillLight);
+
+const topLight = new THREE.DirectionalLight(0xa7f3d0, 2.5);
+topLight.position.set(0, 8, 1);
+scene.add(topLight);
+
+const rimLight = new THREE.PointLight(0x34d399, 8.0, 20);
+rimLight.position.set(0, 3.5, -3.2);
+scene.add(rimLight);
+
+const sensorLight = new THREE.PointLight(0x10b981, 6.0, 10);
+sensorLight.position.set(0, 1.2, 2.0);
+scene.add(sensorLight);
+
+const bottomGlowLight = new THREE.PointLight(0x059669, 7.0, 12);
+bottomGlowLight.position.set(0, -0.6, 0.5);
+scene.add(bottomGlowLight);
+
+// Root Model Group
+const heroGroup = new THREE.Group();
+heroGroup.position.set(0, -0.35, 0);
+heroGroup.scale.set(1.22, 1.22, 1.22);
+scene.add(heroGroup);
+
+// Materials using vivid Phong & Basic colors
+const binBodyMat = new THREE.MeshPhongMaterial({
+  color: 0x047857,
+  emissive: 0x022c22,
+  specular: 0x6ee7b7,
+  shininess: 95
+});
+
+const trimDarkMat = new THREE.MeshPhongMaterial({
+  color: 0x0a261a,
+  specular: 0x34d399,
+  shininess: 80
+});
+
+const lidMat = new THREE.MeshPhongMaterial({
+  color: 0x059669,
+  specular: 0xa7f3d0,
+  shininess: 120
+});
+
+const screenBezelMat = new THREE.MeshPhongMaterial({
+  color: 0x061c13,
+  specular: 0x34d399,
+  shininess: 110
+});
+
+const screenGlassMat = new THREE.MeshPhongMaterial({
+  color: 0x022c22,
+  emissive: 0x04432c,
+  shininess: 140
+});
+
+const emeraldGlowMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
+const mintGlowMat = new THREE.MeshBasicMaterial({ color: 0x6ee7b7 });
+const cyanNeonMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+
+// Dustbin Cylindrical Main Body
+const bodyGeo = new THREE.CylinderGeometry(1.06, 0.88, 2.45, 48);
+const binBody = new THREE.Mesh(bodyGeo, binBodyMat);
+binBody.position.y = 1.22;
+heroGroup.add(binBody);
+
+// Decorative Reinforcement Dark Rings
+const ringGeo1 = new THREE.TorusGeometry(1.05, 0.045, 16, 54);
+const ring1 = new THREE.Mesh(ringGeo1, trimDarkMat);
+ring1.rotation.x = Math.PI / 2;
+ring1.position.y = 0.5;
+heroGroup.add(ring1);
+
+const ringGeo2 = new THREE.TorusGeometry(1.03, 0.045, 16, 54);
+const ring2 = new THREE.Mesh(ringGeo2, trimDarkMat);
+ring2.rotation.x = Math.PI / 2;
+ring2.position.y = 1.9;
+heroGroup.add(ring2);
+
+// Front Digital HUD Screen
+const screenPlate = new THREE.Mesh(new THREE.BoxGeometry(0.74, 1.0, 0.12), screenBezelMat);
+screenPlate.position.set(0, 1.45, 1.03);
+heroGroup.add(screenPlate);
+
+const screenGlass = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.86, 0.05), screenGlassMat);
+screenGlass.position.set(0, 1.45, 1.08);
+heroGroup.add(screenGlass);
+
+// Telemetry Fill Bar (glowing green/mint bar)
+const fillBar = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.08, 0.06), mintGlowMat);
+fillBar.position.set(0, 1.35, 1.12);
+heroGroup.add(fillBar);
+
+// Status indicator beacon
+const beacon = new THREE.Mesh(new THREE.SphereGeometry(0.045, 16, 16), emeraldGlowMat);
+beacon.position.set(0.19, 1.7, 1.12);
+heroGroup.add(beacon);
+
+// Ultrasonic sensor emitter
+const sensorEmitter = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.04, 24), trimDarkMat);
+sensorEmitter.rotation.x = Math.PI / 2;
+sensorEmitter.position.set(-0.16, 1.7, 1.11);
+heroGroup.add(sensorEmitter);
+
+// Ultrasonic Ping shockwave ring
+const pingWaveGeo = new THREE.RingGeometry(0.06, 0.09, 32);
+const pingWaveMat = new THREE.MeshBasicMaterial({ color: 0x34d399, transparent: true, opacity: 0, side: THREE.DoubleSide });
+const pingWave = new THREE.Mesh(pingWaveGeo, pingWaveMat);
+pingWave.position.set(-0.16, 1.7, 1.13);
+heroGroup.add(pingWave);
+
+// Glowing Halo Collar at rim
+const collarGeo = new THREE.TorusGeometry(1.12, 0.038, 16, 54);
+const collar = new THREE.Mesh(collarGeo, mintGlowMat);
+collar.rotation.x = Math.PI / 2;
+collar.position.y = 2.45;
+heroGroup.add(collar);
+
+// Hinged Lid Assembly
+const lidPivot = new THREE.Group();
+lidPivot.position.set(0, 2.48, -0.88);
+heroGroup.add(lidPivot);
+
+const lidMesh = new THREE.Mesh(new THREE.CylinderGeometry(1.16, 1.12, 0.16, 48), lidMat);
+lidMesh.position.set(0, 0.08, 0.88);
+lidPivot.add(lidMesh);
+
+const handleMesh = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.08, 0.14), trimDarkMat);
+handleMesh.position.set(0, 0.19, 0.88);
+lidPivot.add(handleMesh);
+
+// Base Pedestal with glowing ring
+const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(1.38, 1.54, 0.22, 48), trimDarkMat);
+pedestal.position.y = -0.11;
+heroGroup.add(pedestal);
+
+const pedestalHalo = new THREE.Mesh(new THREE.TorusGeometry(1.46, 0.035, 16, 54), emeraldGlowMat);
+pedestalHalo.rotation.x = Math.PI / 2;
+pedestalHalo.position.y = -0.01;
+heroGroup.add(pedestalHalo);
+
+// Floating ambient telemetry particles
+const pCount = 55;
+const pGeo = new THREE.BufferGeometry();
+const pPos = new Float32Array(pCount * 3);
+const pSpeeds = [];
+
+for (let i = 0; i < pCount; i++) {
+  pPos[i * 3] = (Math.random() - 0.5) * 6.5;
+  pPos[i * 3 + 1] = Math.random() * 4.8 - 0.4;
+  pPos[i * 3 + 2] = (Math.random() - 0.5) * 5.5;
+  pSpeeds.push({
+    x: (Math.random() - 0.5) * 0.005,
+    y: 0.006 + Math.random() * 0.008,
+    z: (Math.random() - 0.5) * 0.005,
+    phase: Math.random() * Math.PI * 2
+  });
+}
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+const pMat = new THREE.PointsMaterial({
+  color: 0x34d399,
+  size: 0.11,
+  transparent: true,
+  opacity: 0.9,
+  blending: THREE.AdditiveBlending
+});
+const particles = new THREE.Points(pGeo, pMat);
+scene.add(particles);
+
+// Interactive mouse rotation tracking
+let mouseX = 0, mouseY = 0;
+let targetRotX = 0, targetRotY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+window.addEventListener('resize', () => {
+  const w = container.clientWidth || window.innerWidth;
+  const h = container.clientHeight || window.innerHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+});
+
+// Render Animation Loop
+const clock = new THREE.Clock();
+let currentLidAngle = 0;
+let pingScale = 1.0;
+
+function animate() {
+  requestAnimationFrame(animate);
+  const elapsed = clock.getElapsedTime();
+  const speed = (window.binState && window.binState.rotationSpeed) || 1.0;
+
+  targetRotX += (mouseX - targetRotX) * 0.06;
+  targetRotY += (mouseY - targetRotY) * 0.06;
+
+  // Orbit rotation
+  heroGroup.rotation.y = Math.sin(elapsed * 0.55 * speed) * 0.22 + targetRotX * 0.45;
+  heroGroup.rotation.x = Math.cos(elapsed * 0.45 * speed) * 0.05 - targetRotY * 0.22;
+  heroGroup.position.y = -0.35 + Math.sin(elapsed * 1.5) * 0.06;
+
+  // Lid Actuation Logic
+  let targetAngle = 0;
+  if (window.binState && !window.binState.autoCycle) {
+    targetAngle = window.binState.lidOpen ? -0.95 : 0;
+  } else {
+    const cycle = Math.sin(elapsed * 1.3 * speed);
+    targetAngle = cycle > 0.35 ? -(cycle - 0.35) * 0.7 : 0;
+  }
+  currentLidAngle += (targetAngle - currentLidAngle) * 0.12;
+  lidPivot.rotation.x = currentLidAngle;
+
+  // Real-time Lighting Modes
+  if (window.binState) {
+    if (window.binState.lightMode === 'cyan') {
+      rimLight.color.setHex(0x06b6d4);
+      sensorLight.color.setHex(0x38bdf8);
+      pedestalHalo.material.color.setHex(0x0ea5e9);
+      pMat.color.setHex(0x38bdf8);
+      collar.material.color.setHex(0x38bdf8);
+    } else if (window.binState.lightMode === 'amber') {
+      rimLight.color.setHex(0xf59e0b);
+      sensorLight.color.setHex(0xfbbf24);
+      pedestalHalo.material.color.setHex(0xd97706);
+      pMat.color.setHex(0xfbbf24);
+      collar.material.color.setHex(0xfbbf24);
+    } else {
+      rimLight.color.setHex(0x34d399);
+      sensorLight.color.setHex(0x10b981);
+      pedestalHalo.material.color.setHex(0x10b981);
+      pMat.color.setHex(0x34d399);
+      collar.material.color.setHex(0x6ee7b7);
+    }
+
+    // Dynamic Fill Bar Adjustment
+    const fillTarget = window.binState.simulatedFill || 0.45;
+    fillBar.scale.x = fillTarget * 1.8;
+  }
+
+  // Ultrasonic Ping Shockwave Animation
+  if (window.binState && window.binState.triggerPing) {
+    pingScale += 0.1;
+    pingWave.scale.set(pingScale, pingScale, 1);
+    pingWaveMat.opacity = Math.max(0, 1.0 - (pingScale - 1) * 0.45);
+    if (pingWaveMat.opacity <= 0) {
+      pingScale = 1.0;
+      window.binState.triggerPing = false;
+    }
+  }
+
+  // Floating particles motion
+  const positions = pGeo.attributes.position.array;
+  for (let i = 0; i < pCount; i++) {
+    const s = pSpeeds[i];
+    positions[i * 3 + 1] += s.y * speed;
+    positions[i * 3] += Math.sin(elapsed * 1.2 + s.phase) * 0.003;
+    if (positions[i * 3 + 1] > 3.9) {
+      positions[i * 3 + 1] = -0.3;
+    }
+  }
+  pGeo.attributes.position.needsUpdate = true;
+
+  renderer.render(scene, camera);
+}
+animate();
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_53 -->
+</body>
+</html>

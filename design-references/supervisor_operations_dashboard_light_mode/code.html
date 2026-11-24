@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>SmartWaste Dispatch Command</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>
+@layer base{
+  html,body{margin:0;padding:0;}
+  body{overscroll-behavior:none;}
+  main>:first-child{margin-top:0!important;}
+  main>:last-child{margin-bottom:0!important;}
+}
+::-webkit-scrollbar{display:none;}
+
+/* Dynamic radar pulse wave keyframes */
+@keyframes radarWave {
+  0% { transform: scale(1); opacity: 0.85; }
+  70% { transform: scale(2.8); opacity: 0.15; }
+  100% { transform: scale(3.5); opacity: 0; }
+}
+
+@keyframes glowBorder {
+  0%, 100% { border-color: rgba(244, 63, 94, 0.45); box-shadow: 0 0 15px rgba(244, 63, 94, 0.2); }
+  50% { border-color: rgba(244, 63, 94, 0.85); box-shadow: 0 0 25px rgba(244, 63, 94, 0.4); }
+}
+
+@keyframes scanline {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 16px rgba(110, 231, 183, 0.9)); }
+}
+
+.radar-ping-rose {
+  animation: radarWave 2.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.radar-ping-emerald {
+  animation: radarWave 2.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.critical-pulse-card {
+  animation: glowBorder 3s ease-in-out infinite;
+}
+
+.scanline-glow {
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.35), transparent);
+  animation: scanline 4s linear infinite;
+}
+
+.hover-glow-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-glow-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15), 0 0 0 1px rgba(110, 231, 183, 0.15);
+}
+
+.hover-glow-row {
+  transition: all 0.2s ease;
+}
+.hover-glow-row:hover {
+  background-color: rgba(27, 43, 35, 0.6) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode: "class", theme: {extend: {colors: {
+  "surface-bright": "#17231c",
+  tertiary: "#f59e0b",
+  "inverse-primary": "#047857",
+  "on-primary": "#022c17",
+  "tertiary-fixed": "#78350f",
+  "secondary-fixed": "#1e293b",
+  "on-primary-fixed": "#ecfdf5",
+  "secondary-container": "#1e3a2b",
+  "on-tertiary": "#451a03",
+  background: "#0a0f0d",
+  "primary-fixed-dim": "#34d399",
+  "inverse-on-surface": "#0f1713",
+  "surface-dim": "#0a0f0d",
+  "primary-container": "#064e3b",
+  "surface-tint": "#10b981",
+  "on-secondary": "#ecfdf5",
+  "surface-container-lowest": "#070b09",
+  "tertiary-fixed-dim": "#b45309",
+  "tertiary-container": "#451a03",
+  "on-secondary-fixed": "#ecfdf5",
+  "error-container": "#450a0a",
+  surface: "#0f1713",
+  "surface-container-high": "#1b2b23",
+  "surface-container": "#131e18",
+  "secondary-fixed-dim": "#243c2f",
+  "on-error-container": "#fecdd3",
+  "on-secondary-container": "#a7f3d0",
+  "on-tertiary-fixed": "#fef3c7",
+  "surface-container-highest": "#24382e",
+  "on-primary-container": "#a7f3d0",
+  "on-surface": "#f1f5f9",
+  error: "#f43f5e",
+  "on-error": "#fff",
+  "outline-variant": "#1b2b23",
+  "on-tertiary-fixed-variant": "#fbbf24",
+  "surface-variant": "#16231c",
+  "on-primary-fixed-variant": "#10b981",
+  "primary-fixed": "#6ee7b7",
+  "surface-container-low": "#0b120f",
+  "on-tertiary-container": "#fef3c7",
+  "on-surface-variant": "#94a3b8",
+  "on-background": "#f1f5f9",
+  secondary: "#10b981",
+  "inverse-surface": "#f1f5f9",
+  outline: "#2d4437",
+  primary: "#10b981",
+  "on-secondary-fixed-variant": "#6ee7b7"
+}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"margin-md": "1.5rem", "space-xs": "0.25rem", "space-xl": "2rem", "gutter-md": "1.5rem", "space-sm": "0.5rem", "space-md": "1rem", "gutter-lg": "2rem", margin: "1rem", "margin-lg": "2.5rem", "space-2xl": "3rem", "space-lg": "1.5rem", gutter: "1rem"}, fontFamily: {"body-lg": ["Inter"], "headline-lg-mobile": ["Manrope"], "body-md": ["Inter"], "label-lg": ["Inter"], "label-md": ["Inter"], "headline-sm": ["Manrope"], "headline-lg": ["Manrope"], "headline-md": ["Manrope"], "headline-xl-mobile": ["Manrope"], "body-sm": ["Inter"], "headline-xl": ["Manrope"], "label-sm": ["Inter"], headline: ["Manrope"], display: ["Manrope"], body: ["Inter"], label: ["Inter"]}, fontSize: {"body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], "headline-lg-mobile": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "label-lg": ["14px", {lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600"}], "headline-sm": ["18px", {lineHeight: "26px", letterSpacing: "-0.005em", fontWeight: "600"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.015em", fontWeight: "600"}], "headline-md": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "headline-xl-mobile": ["30px", {lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "700"}], "body-sm": ["13px", {lineHeight: "18px", fontWeight: "400"}], "headline-xl": ["40px", {lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700"}], "label-sm": ["11px", {lineHeight: "14px", letterSpacing: "0.03em", fontWeight: "500"}]}}}};</script></head><body class="bg-[#0a0f0d] font-body-md text-[#f1f5f9] antialiased selection:bg-emerald-500 selection:text-black"><header class="fixed top-0 left-0 right-0 z-50 bg-[#0f1713]/95 backdrop-blur-md border-b border-[#1b2b23] shadow-lg shadow-black/40"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="p-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center shadow-inner"><img alt="SmartWaste Dispatch Logo" class="h-7 w-auto object-contain brightness-110 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" src="https://lh3.googleusercontent.com/aida/ALJJyrAkYMm1MhcnEzRDhkQZXN1j3_OpCx01e7jRLrlmI-pjjzqwVEc4cwUQuavDj2zKOf_BwmfAwNJbF7KRhFcCnfNhyX8rxjm_cem6nboXd19-aHr5GcJPdIIbFLxaAjihXdcImNqMcwQ5chDNQ-cU7tGVMFtsv430BKvhgrluvZL14a2feX0FHmLNP5MB65KT-QyOQmDAmImfZ_T-_Ul-6RWV3cpsYiza7HcgKHH1kdunOQ"/></div><div class="flex items-baseline gap-space-xs"><span class="font-headline-sm text-headline-sm font-bold text-emerald-400 tracking-tight drop-shadow-[0_0_10px_rgba(16,185,129,0.35)]">SmartWaste</span><span class="font-label-sm text-label-sm uppercase tracking-wider bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 px-space-xs py-0.5 rounded font-bold shadow-[0_0_8px_rgba(16,185,129,0.2)]">DISPATCH</span></div></div><nav class="hidden md:flex items-center gap-space-xs bg-[#131e18] p-1 rounded-lg border border-[#1b2b23]" data-active-classes="bg-emerald-500 text-slate-950 font-label-md shadow-[0_0_15px_rgba(16,185,129,0.4)]"><a class="px-space-md py-space-xs rounded font-label-md text-label-md text-slate-400 hover:text-slate-100 hover:bg-[#1b2b23] transition-all" data-path="public-dashboard" href="#">Public Dashboard</a><a class="px-space-md py-space-xs rounded font-label-md text-label-md text-slate-400 hover:text-slate-100 hover:bg-[#1b2b23] transition-all" data-path="worker-portal" href="#">Worker Portal</a><a aria-current="page" class="px-space-md py-space-xs rounded transition-all bg-emerald-500 text-slate-950 font-label-md font-bold shadow-[0_0_15px_rgba(16,185,129,0.4)]" data-path="supervisor-console" href="#">Supervisor Console</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-1 bg-[#131e18] border border-emerald-500/30 rounded-full shadow-inner"><span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_#10b981]"></span></span><span class="font-label-sm text-label-sm text-emerald-300 font-medium tracking-wide">Network &amp; GPS Online</span></div><div class="flex items-center gap-space-sm"><div class="text-right hidden sm:block"><div class="font-label-sm text-label-sm font-bold text-slate-100">Chief Controller</div><div class="font-label-sm text-label-sm text-emerald-400/80 font-mono">Supervisor Desk</div></div><div class="w-8 h-8 rounded-full bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center shadow-[0_0_10px_rgba(16,185,129,0.25)]"><span class="material-symbols-outlined text-emerald-400 text-[18px]">person</span></div></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-64 bg-[#0f1713] border-r border-[#1b2b23] z-40 flex flex-col justify-between py-space-md shadow-xl"><div class="flex flex-col gap-space-md"><div class="px-space-md"><span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400 font-bold">Operations Center</span></div><nav class="flex flex-col gap-space-xs px-space-sm" data-active-classes="bg-emerald-500 text-slate-950 font-label-md shadow-[0_0_15px_rgba(16,185,129,0.4)]"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-all bg-emerald-500 text-slate-950 font-label-md shadow-[0_0_18px_rgba(16,185,129,0.45)] font-bold" data-path="supervisor-console" href="#"><span class="material-symbols-outlined text-[20px] text-slate-950">map</span><span class="font-label-md text-label-md font-bold">Live Telemetry Map</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-slate-300 hover:bg-[#1b2b23] hover:text-emerald-300 transition-all font-label-md text-label-md font-medium" data-path="route-optimization" href="#"><span class="material-symbols-outlined text-[20px] text-slate-400">route</span><span>Fleet Routing</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-slate-300 hover:bg-[#1b2b23] hover:text-emerald-300 transition-all font-label-md text-label-md font-medium" data-path="dispatch-queue" href="#"><span class="material-symbols-outlined text-[20px] text-slate-400">checklist</span><span>Incident Queue</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-slate-300 hover:bg-[#1b2b23] hover:text-emerald-300 transition-all font-label-md text-label-md font-medium" data-path="fleet-telematics" href="#"><span class="material-symbols-outlined text-[20px] text-slate-400">local_shipping</span><span>Vehicle Fleet</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-slate-300 hover:bg-[#1b2b23] hover:text-emerald-300 transition-all font-label-md text-label-md font-medium" data-path="capacity-analytics" href="#"><span class="material-symbols-outlined text-[20px] text-slate-400">analytics</span><span>Analytics &amp; KPIs</span></a></nav></div><div class="px-space-md"><div class="p-space-sm rounded-lg bg-[#131e18] border border-[#1b2b23] flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-slate-400 font-medium">Fleet Sync</span><span class="font-label-sm text-label-sm font-bold text-emerald-400 font-mono">100%</span></div><div class="w-full bg-[#1b2b23] rounded-full h-1.5 overflow-hidden"><div class="bg-gradient-to-r from-emerald-600 to-emerald-400 h-1.5 rounded-full w-full shadow-[0_0_8px_#10b981]"></div></div></div></div></aside><div class="pl-64"><main class="relative pt-16 bg-[#0a0f0d] min-h-screen"><div class="flex flex-col w-full">
+<!-- Interactive Dispatch Header -->
+<div class="w-full bg-[#0f1713] border-b border-[#1b2b23] shadow-md px-space-lg py-space-md mb-space-lg relative overflow-hidden">
+<div class="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>
+<div class="max-w-[1720px] mx-auto flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-baseline gap-space-sm sm:gap-space-lg">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-emerald-400/80 font-bold">Municipal Oversight • Zone A-4</span>
+<h1 class="font-headline-lg text-headline-lg font-bold text-slate-100 tracking-tight">Operations Overview</h1>
+</div>
+<div class="flex items-center gap-space-xs text-slate-300 bg-[#131e18] border border-[#1b2b23] px-space-sm py-1 rounded-full w-fit">
+<span class="material-symbols-outlined text-[16px] text-emerald-400">schedule</span>
+<span class="font-label-md text-label-md font-mono text-emerald-300 font-medium" id="live-time-ticker">Oct 24, 2024 • 14:38:22 UTC</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm sm:gap-space-md">
+<!-- Live System Posture Indicator -->
+<div class="flex items-center gap-space-xs bg-[#131e18] border border-emerald-500/30 px-space-md py-space-xs rounded-lg shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+<span class="flex h-2.5 w-2.5 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_#10b981]"></span>
+</span>
+<div class="flex flex-col leading-tight">
+<span class="font-label-sm text-label-sm text-slate-400">Dispatch Alert Level</span>
+<span class="font-label-md text-label-md font-bold text-emerald-400">Normal Operational</span>
+</div>
+</div>
+<button class="flex items-center gap-space-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-label-md text-label-md font-bold px-space-md py-space-sm rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all transform active:scale-95" onclick="triggerAutoAssignModal()">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>Auto-Assign Tasks</span>
+</button>
+<button class="p-space-sm rounded-lg bg-[#131e18] border border-[#1b2b23] text-slate-300 hover:text-emerald-300 hover:bg-[#1b2b23] hover:border-emerald-500/40 transition-all shadow-sm" onclick="window.location.reload()" title="Force Telemetry Sync">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Content Layout -->
+<div class="max-w-[1720px] w-full mx-auto px-space-lg pb-space-2xl space-y-space-lg">
+<!-- Operational KPI Matrix (Flawless Dark Mode Contrast & Smooth Lift) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- KPI 1 -->
+<div class="hover-glow-card bg-[#0f1713] rounded-xl p-space-md border border-[#1b2b23] shadow-md flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400 font-bold">Managed Bins</span>
+<span class="p-1.5 rounded-lg bg-emerald-950/60 text-emerald-400 border border-emerald-500/30 material-symbols-outlined text-[18px] shadow-[0_0_10px_rgba(16,185,129,0.2)]">delete</span>
+</div>
+<div class="my-space-xs">
+<div class="font-headline-lg text-headline-lg font-bold text-slate-100">142</div>
+<p class="font-label-sm text-label-sm text-slate-400">Active Smart Sensors Installed</p>
+</div>
+<div class="flex items-center gap-space-xs pt-space-xs font-label-sm text-label-sm">
+<span class="px-2 py-0.5 rounded-md bg-emerald-950/70 text-emerald-300 border border-emerald-500/40 font-bold">118 Normal</span>
+<span class="px-2 py-0.5 rounded-md bg-amber-950/60 text-amber-300 border border-amber-500/30 font-semibold">18 &gt;80%</span>
+<span class="px-2 py-0.5 rounded-md bg-rose-950/70 text-rose-300 border border-rose-500/40 font-bold">6 Critical</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="hover-glow-card bg-[#0f1713] rounded-xl p-space-md border border-[#1b2b23] shadow-md flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400 font-bold">Active Field Crews</span>
+<span class="p-1.5 rounded-lg bg-emerald-950/60 text-emerald-400 border border-emerald-500/30 material-symbols-outlined text-[18px] shadow-[0_0_10px_rgba(16,185,129,0.2)]">local_shipping</span>
+</div>
+<div class="my-space-xs">
+<div class="font-headline-lg text-headline-lg font-bold text-slate-100">6 Trucks</div>
+<p class="font-label-sm text-label-sm text-emerald-400 font-semibold">100% Fleet On Route</p>
+</div>
+<div class="flex items-center justify-between text-slate-400 font-label-sm text-label-sm pt-space-xs">
+<span>14 Cleared Today</span>
+<span class="font-bold text-slate-200">22 Tasks Pending</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="hover-glow-card bg-[#0f1713] rounded-xl p-space-md border border-[#1b2b23] shadow-md flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400 font-bold">Today's Clearance Rate</span>
+<span class="p-1.5 rounded-lg bg-emerald-950/60 text-emerald-400 border border-emerald-500/30 material-symbols-outlined text-[18px] shadow-[0_0_10px_rgba(16,185,129,0.2)]">trending_up</span>
+</div>
+<div class="my-space-xs">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg font-bold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]">84%</span>
+<span class="font-label-sm text-label-sm text-emerald-300 font-bold">On Schedule</span>
+</div>
+<!-- Real SVG Progress Metric -->
+<div class="w-full bg-[#1b2b23] h-2 rounded-full mt-2 overflow-hidden border border-[#24382e]">
+<div class="bg-gradient-to-r from-emerald-600 to-emerald-400 h-2 rounded-full transition-all duration-500 shadow-[0_0_10px_#10b981]" style="width: 84%"></div>
+</div>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-slate-400 pt-space-xs">
+<span>Target: 90% by 18:00</span>
+<span class="text-emerald-400 font-semibold">+3.2% vs yesterday</span>
+</div>
+</div>
+<!-- KPI 4: Pulsing glowing border on Critical Alert card -->
+<div class="hover-glow-card critical-pulse-card bg-[#0f1713] rounded-xl p-space-md border border-rose-500/40 shadow-md flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-rose-500/10 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-rose-400 font-bold flex items-center gap-1">
+  Critical Alerts
+  <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+</span>
+<span class="p-1.5 rounded-lg bg-rose-950/60 text-rose-400 border border-rose-500/40 material-symbols-outlined text-[18px]">warning</span>
+</div>
+<div class="my-space-xs">
+<div class="font-headline-lg text-headline-lg font-bold text-rose-400 drop-shadow-[0_0_10px_rgba(244,63,94,0.4)]">2 Unassigned</div>
+<p class="font-label-sm text-label-sm text-slate-400">Overflow ≥95% requires dispatch</p>
+</div>
+<div class="pt-space-xs flex items-center justify-between">
+<button class="text-left font-label-sm text-label-sm font-bold text-rose-300 hover:text-rose-200 hover:underline flex items-center gap-0.5 transition-colors" onclick="scrollToAlerts()">
+            Resolve in queue <span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+</button>
+<span class="font-label-sm text-label-sm px-2 py-0.5 bg-rose-950/80 text-rose-300 border border-rose-500/40 rounded font-bold shadow-[0_0_8px_rgba(244,63,94,0.3)]">High Priority</span>
+</div>
+</div>
+</div>
+<!-- Live Operational Dispatch Map (Center-dominant Leaflet Telemetry Map) -->
+<div class="bg-[#0f1713] rounded-xl border border-[#1b2b23] shadow-xl overflow-hidden relative">
+<!-- Map Top Toolbar with animated scanning ambient wave -->
+<div class="px-space-md py-space-sm bg-[#0f1713] border-b border-[#1b2b23] flex flex-wrap items-center justify-between gap-space-sm relative overflow-hidden">
+<div class="absolute inset-0 scanline-glow pointer-events-none opacity-40"></div>
+<div class="flex items-center gap-space-md relative z-10">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-emerald-400 text-[20px] drop-shadow-[0_0_6px_#10b981]">pin_drop</span>
+<span class="font-label-lg text-label-lg font-bold text-slate-100">GIS Sensor &amp; Fleet Telemetry</span>
+</div>
+<span class="hidden md:inline-block font-label-sm text-label-sm text-slate-400 font-medium">Metropolitan Sector Central-North</span>
+</div>
+<!-- Filter Toggles -->
+<div class="flex items-center gap-space-xs bg-[#131e18] p-1 rounded-lg border border-[#1b2b23] relative z-10">
+<button class="map-filter-btn px-space-md py-1 rounded-md font-label-sm text-label-sm bg-emerald-500 text-slate-950 font-bold shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all" onclick="setMapFilter('all', this)">All Bins (142)</button>
+<button class="map-filter-btn px-space-md py-1 rounded-md font-label-sm text-label-sm text-slate-400 hover:text-slate-100 hover:bg-[#1b2b23] transition-all" onclick="setMapFilter('critical', this)">Critical Only (≥95%)</button>
+<button class="map-filter-btn px-space-md py-1 rounded-md font-label-sm text-label-sm text-slate-400 hover:text-slate-100 hover:bg-[#1b2b23] transition-all" onclick="setMapFilter('in-progress', this)">In-Progress Pickups</button>
+</div>
+<div class="flex items-center gap-space-xs relative z-10">
+<span class="flex items-center gap-1.5 font-label-sm text-label-sm text-emerald-300 bg-[#131e18] border border-emerald-500/30 px-space-sm py-1 rounded-md font-medium">
+<span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span></span> 6 Active Trucks
+          </span>
+<span class="flex items-center gap-1.5 font-label-sm text-label-sm text-rose-300 bg-rose-950/60 border border-rose-500/40 px-space-sm py-1 rounded-md font-bold">
+<span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span></span> 6 Overflow
+          </span>
+</div>
+</div>
+<!-- Map Viewport with dark tinted imagery styling -->
+<div class="relative w-full h-[540px] bg-[#070b09] overflow-hidden">
+<!-- Satellite/Road Map with dark contrast filter overlay -->
+<div class="w-full h-full bg-cover bg-center brightness-[0.72] contrast-[1.25] invert-[0.88] hue-rotate-[165deg]" data-alt="Overhead high-resolution aerial municipal satellite imagery map of clean urban grid blocks, green boulevard trees, transit hubs, and light gray street grids representing a live GIS telemetry control dashboard." data-location="City Center Metro Waste Hub, Berlin" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWjEWk_CFTqPwPkBDdbDIcJFSDAtdLDvm0aNAwRPwP3xs-gqYMY24aI2DReIvrukYtCq1tsyRuTDHULRn70-xeTqm1iVruW9aL_kOuYmnGSxHRSpx1rDGwCX471n84tUcaNNO_V73v6HhyJNhJeoOFlOrK4BfI2XdiVwajIWpqQ1mn3y1W7lTmwJG0wOyuKvM9TRtExy5urTF4w26JzOIkRz1TK5jTnYlhfmod01JK')">
+</div>
+<!-- Dark ambient vignette mask -->
+<div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#0a0f0d]/90 via-transparent to-[#0a0f0d]/40"></div>
+<!-- Overlay HUD - Sector Status -->
+<div class="absolute top-space-md left-space-md z-10 bg-[#0f1713]/90 backdrop-blur-md p-space-sm rounded-lg shadow-xl border border-emerald-500/30 max-w-xs pointer-events-auto">
+<div class="flex items-center justify-between gap-space-md mb-1">
+<span class="font-label-sm text-label-sm font-bold text-slate-100 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+  Sector Telemetry Sync
+</span>
+<span class="font-label-sm text-label-sm text-emerald-400 font-mono font-bold">100Hz</span>
+</div>
+<p class="font-body-sm text-body-sm text-slate-300">Leaflet vector layer tracking 142 ultrasonic bin beacons and 6 AVL cellular truck units.</p>
+</div>
+<!-- Simulated Map Pins: Critical Bins with Animated Radar Wave Ripples -->
+<div class="absolute top-[28%] left-[42%] z-20 group cursor-pointer" id="pin-b108" onclick="showBinModal('BIN-108', 'Market Plaza South', '98%', 'Unassigned', 'Critical Overflow')">
+<div class="relative flex items-center justify-center">
+<span class="radar-ping-rose absolute inline-flex h-9 w-9 rounded-full bg-rose-500/40 border border-rose-400"></span>
+<span class="animate-ping absolute inline-flex h-6 w-6 rounded-full bg-rose-500 opacity-60"></span>
+<div class="relative w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center shadow-[0_0_12px_rgba(244,63,94,0.8)] font-label-sm text-label-sm font-bold border border-rose-300">!</div>
+</div>
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex flex-col bg-[#070b09] text-white px-space-sm py-1 rounded-md shadow-2xl border border-rose-500/40 whitespace-nowrap z-30 pointer-events-none">
+<span class="font-label-sm text-label-sm font-bold text-slate-100">BIN-108 (98%)</span>
+<span class="font-label-sm text-label-sm text-rose-400 font-medium">Unassigned Overflow</span>
+</div>
+</div>
+<div class="absolute top-[48%] left-[64%] z-20 group cursor-pointer" id="pin-b114" onclick="showBinModal('BIN-114', 'North Terminus Gate 2', '96%', 'Unassigned', 'Critical Overflow')">
+<div class="relative flex items-center justify-center">
+<span class="radar-ping-rose absolute inline-flex h-9 w-9 rounded-full bg-rose-500/40 border border-rose-400"></span>
+<span class="animate-ping absolute inline-flex h-6 w-6 rounded-full bg-rose-500 opacity-60"></span>
+<div class="relative w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center shadow-[0_0_12px_rgba(244,63,94,0.8)] font-label-sm text-label-sm font-bold border border-rose-300">!</div>
+</div>
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex flex-col bg-[#070b09] text-white px-space-sm py-1 rounded-md shadow-2xl border border-rose-500/40 whitespace-nowrap z-30 pointer-events-none">
+<span class="font-label-sm text-label-sm font-bold text-slate-100">BIN-114 (96%)</span>
+<span class="font-label-sm text-label-sm text-rose-400 font-medium">Unassigned Overflow</span>
+</div>
+</div>
+<div class="absolute top-[62%] left-[28%] z-20 group cursor-pointer" id="pin-b089" onclick="showBinModal('BIN-089', 'Financial District Walk', '95%', 'Truck Eco-02', 'En Route')">
+<div class="relative flex items-center justify-center">
+<span class="radar-ping-emerald absolute inline-flex h-7 w-7 rounded-full bg-emerald-500/30"></span>
+<div class="relative w-5 h-5 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center shadow-[0_0_10px_rgba(16,185,129,0.7)] font-label-sm text-label-sm font-bold border border-emerald-200">95</div>
+</div>
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:flex flex-col bg-[#070b09] text-white px-space-sm py-1 rounded-md shadow-2xl border border-emerald-500/40 whitespace-nowrap z-30 pointer-events-none">
+<span class="font-label-sm text-label-sm font-bold text-slate-100">BIN-089 (95%)</span>
+<span class="font-label-sm text-label-sm text-emerald-300">Eco-02 En Route</span>
+</div>
+</div>
+<!-- Truck Vehicle Pins with Animated Pulse Waves & Dark Glow -->
+<div class="absolute top-[58%] left-[32%] z-20 group cursor-pointer">
+<div class="relative flex items-center justify-center">
+<span class="radar-ping-emerald absolute inline-flex h-10 w-10 rounded-full bg-emerald-500/30 border border-emerald-400/50"></span>
+<div class="relative p-1.5 rounded-full bg-emerald-500 text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.7)] border-2 border-emerald-200 flex items-center justify-center transform hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[16px] font-bold">local_shipping</span>
+</div>
+</div>
+<div class="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 bg-[#0f1713]/95 border border-emerald-500/40 px-space-xs py-0.5 rounded text-emerald-300 font-label-sm text-label-sm font-bold shadow-lg whitespace-nowrap">
+            Eco-02 → BIN-089
+          </div>
+</div>
+<div class="absolute top-[34%] left-[55%] z-20 group cursor-pointer">
+<div class="relative flex items-center justify-center">
+<span class="radar-ping-emerald absolute inline-flex h-10 w-10 rounded-full bg-emerald-500/30 border border-emerald-400/50"></span>
+<div class="relative p-1.5 rounded-full bg-emerald-500 text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.7)] border-2 border-emerald-200 flex items-center justify-center transform hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[16px] font-bold">local_shipping</span>
+</div>
+</div>
+<div class="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 bg-[#0f1713]/95 border border-emerald-500/40 px-space-xs py-0.5 rounded text-emerald-300 font-label-sm text-label-sm font-bold shadow-lg whitespace-nowrap">
+            Eco-01 • Emptying
+          </div>
+</div>
+<!-- Map Navigation Controls -->
+<div class="absolute bottom-space-md right-space-md z-10 flex flex-col gap-0 bg-[#0f1713] rounded-lg shadow-xl border border-[#1b2b23] overflow-hidden">
+<button class="w-9 h-9 flex items-center justify-center text-slate-300 hover:bg-[#1b2b23] hover:text-emerald-300 transition-all" title="Zoom in">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+<div class="h-[1px] bg-[#1b2b23]"></div>
+<button class="w-9 h-9 flex items-center justify-center text-slate-300 hover:bg-[#1b2b23] hover:text-emerald-300 transition-all" title="Zoom out">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<div class="h-[1px] bg-[#1b2b23]"></div>
+<button class="w-9 h-9 flex items-center justify-center text-slate-300 hover:bg-[#1b2b23] hover:text-emerald-300 transition-all" title="Recenter Map">
+<span class="material-symbols-outlined text-[20px]">my_location</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Dual Operational Panels: Alert Management Table & Active Crew Fleet Roster -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg" id="alerts-section">
+<!-- Actionable Critical Alert & Dispatch Management Table (8 cols) -->
+<div class="xl:col-span-7 2xl:col-span-8 bg-[#0f1713] rounded-xl border border-[#1b2b23] shadow-md p-space-md flex flex-col">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm border-b border-[#1b2b23]">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-rose-500 text-[22px] drop-shadow-[0_0_8px_rgba(244,63,94,0.6)]">notification_important</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-slate-100">Critical Alert &amp; Overflow Queue</h2>
+<span class="font-label-sm text-label-sm text-slate-400">Sensors reporting ≥90% volume capacity</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm bg-rose-950/70 text-rose-300 border border-rose-500/40 font-bold px-space-sm py-0.5 rounded-full shadow-[0_0_8px_rgba(244,63,94,0.25)]">2 Unassigned Bins</span>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-[#131e18] text-slate-300 font-label-sm text-label-sm border-y border-[#1b2b23]">
+<th class="py-space-sm px-space-md rounded-l-lg font-semibold">Bin ID</th>
+<th class="py-space-sm px-space-md font-semibold">Location</th>
+<th class="py-space-sm px-space-md font-semibold">Fill Level</th>
+<th class="py-space-sm px-space-md font-semibold">Assigned Crew</th>
+<th class="py-space-sm px-space-md font-semibold">Status</th>
+<th class="py-space-sm px-space-md text-right rounded-r-lg font-semibold">Action</th>
+</tr>
+</thead>
+<tbody id="critical-bins-body">
+<!-- Item 1 - Critical Unassigned -->
+<tr class="hover-glow-row border-b border-[#1b2b23]/70">
+<td class="py-space-md px-space-md font-mono font-bold text-emerald-400">BIN-108</td>
+<td class="py-space-md px-space-md">
+<div class="font-label-md text-label-md font-bold text-slate-100">Market Plaza South</div>
+<div class="text-slate-400 font-label-sm text-label-sm">Sector A-4 • Pedestrian Mall</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-16 bg-[#1b2b23] h-2 rounded-full overflow-hidden border border-[#24382e]">
+<div class="bg-gradient-to-r from-rose-600 to-rose-400 h-2 rounded-full shadow-[0_0_8px_#f43f5e]" style="width: 98%"></div>
+</div>
+<span class="font-label-md text-label-md font-bold text-rose-400 font-mono">98%</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-label-sm text-label-sm text-slate-500 italic">Unassigned</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-label-sm font-bold bg-rose-950/70 text-rose-300 border border-rose-500/40">
+                    Overflow Imminent
+                  </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-md py-1 bg-emerald-500 text-slate-950 font-label-sm text-label-sm font-bold rounded-lg hover:bg-emerald-400 transition-all shadow-[0_0_12px_rgba(16,185,129,0.35)]" onclick="openDispatchModal('BIN-108', 'Market Plaza South', '98%')">
+                    Dispatch Crew
+                  </button>
+</td>
+</tr>
+<!-- Item 2 - Critical Unassigned -->
+<tr class="hover-glow-row border-b border-[#1b2b23]/70">
+<td class="py-space-md px-space-md font-mono font-bold text-emerald-400">BIN-114</td>
+<td class="py-space-md px-space-md">
+<div class="font-label-md text-label-md font-bold text-slate-100">North Terminus Gate 2</div>
+<div class="text-slate-400 font-label-sm text-label-sm">Sector B-1 • Transit Hub</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-16 bg-[#1b2b23] h-2 rounded-full overflow-hidden border border-[#24382e]">
+<div class="bg-gradient-to-r from-rose-600 to-rose-400 h-2 rounded-full shadow-[0_0_8px_#f43f5e]" style="width: 96%"></div>
+</div>
+<span class="font-label-md text-label-md font-bold text-rose-400 font-mono">96%</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="font-label-sm text-label-sm text-slate-500 italic">Unassigned</span>
+</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-label-sm font-bold bg-rose-950/70 text-rose-300 border border-rose-500/40">
+                    Critical Overflow
+                  </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-md py-1 bg-emerald-500 text-slate-950 font-label-sm text-label-sm font-bold rounded-lg hover:bg-emerald-400 transition-all shadow-[0_0_12px_rgba(16,185,129,0.35)]" onclick="openDispatchModal('BIN-114', 'North Terminus Gate 2', '96%')">
+                    Dispatch Crew
+                  </button>
+</td>
+</tr>
+<!-- Item 3 - In Progress -->
+<tr class="hover-glow-row border-b border-[#1b2b23]/70">
+<td class="py-space-md px-space-md font-mono font-bold text-emerald-400">BIN-089</td>
+<td class="py-space-md px-space-md">
+<div class="font-label-md text-label-md font-bold text-slate-100">Financial District Walk</div>
+<div class="text-slate-400 font-label-sm text-label-sm">Sector A-2 • Commercial Corridor</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-16 bg-[#1b2b23] h-2 rounded-full overflow-hidden border border-[#24382e]">
+<div class="bg-amber-500 h-2 rounded-full shadow-[0_0_8px_#f59e0b]" style="width: 95%"></div>
+</div>
+<span class="font-label-md text-label-md font-bold text-amber-400 font-mono">95%</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="font-label-sm text-label-sm font-bold text-emerald-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span> Eco-02
+                  </div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-label-sm font-bold bg-emerald-950/70 text-emerald-300 border border-emerald-500/40">
+                    En Route (ETA 4m)
+                  </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-md py-1 bg-[#131e18] border border-[#1b2b23] text-slate-300 font-label-sm text-label-sm font-medium rounded-lg hover:bg-[#1b2b23] hover:text-emerald-300 hover:border-emerald-500/30 transition-all" onclick="alert('Viewing live telemetry for Truck Eco-02')">
+                    Track Unit
+                  </button>
+</td>
+</tr>
+<!-- Item 4 - In Progress -->
+<tr class="hover-glow-row">
+<td class="py-space-md px-space-md font-mono font-bold text-emerald-400">BIN-042</td>
+<td class="py-space-md px-space-md">
+<div class="font-label-md text-label-md font-bold text-slate-100">Civic Library Park</div>
+<div class="text-slate-400 font-label-sm text-label-sm">Sector C-3 • Public Lawn</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-16 bg-[#1b2b23] h-2 rounded-full overflow-hidden border border-[#24382e]">
+<div class="bg-emerald-500 h-2 rounded-full shadow-[0_0_8px_#10b981]" style="width: 92%"></div>
+</div>
+<span class="font-label-md text-label-md font-bold text-emerald-400 font-mono">92%</span>
+</div>
+</td>
+<td class="py-space-md px-space-md">
+<div class="font-label-sm text-label-sm font-bold text-emerald-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span> Eco-05
+                  </div>
+</td>
+<td class="py-space-md px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-label-sm font-bold bg-emerald-950/70 text-emerald-300 border border-emerald-500/40">
+                    Servicing Now
+                  </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="px-space-md py-1 bg-[#131e18] border border-[#1b2b23] text-slate-300 font-label-sm text-label-sm font-medium rounded-lg hover:bg-[#1b2b23] hover:text-emerald-300 hover:border-emerald-500/30 transition-all" onclick="alert('Viewing live telemetry for Truck Eco-05')">
+                    Track Unit
+                  </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Staff & Crew Fleet Roster (4 cols) -->
+<div class="xl:col-span-5 2xl:col-span-4 bg-[#0f1713] rounded-xl border border-[#1b2b23] shadow-md p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-sm mb-space-sm border-b border-[#1b2b23]">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-emerald-400 text-[22px] drop-shadow-[0_0_6px_#10b981]">badge</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-slate-100">Staff &amp; Fleet Roster</h2>
+<span class="font-label-sm text-label-sm text-slate-400">Active shift assignments</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-mono text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-space-sm py-0.5 rounded font-bold shadow-[0_0_8px_rgba(16,185,129,0.2)]">6 of 6 Active</span>
+</div>
+<!-- Roster List -->
+<div class="space-y-space-xs">
+<!-- Truck Eco-01 -->
+<div class="hover-glow-row p-space-sm rounded-lg bg-[#131e18] border border-[#1b2b23] flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-emerald-500 text-slate-950 flex items-center justify-center font-label-sm text-label-sm font-bold shadow-[0_0_8px_rgba(16,185,129,0.4)]">
+                  01
+                </div>
+<div>
+<div class="font-label-md text-label-md font-bold text-slate-100 flex items-center gap-1.5">
+                    Truck Eco-01 • Marcus Vance
+                  </div>
+<div class="font-label-sm text-label-sm text-slate-400">Target: <span class="font-mono text-emerald-400 font-semibold">BIN-031</span> (Central Station)</div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-emerald-300 px-2.5 py-0.5 bg-emerald-950/80 border border-emerald-500/40 rounded-full">On Route</span>
+</div>
+<!-- Truck Eco-02 -->
+<div class="hover-glow-row p-space-sm rounded-lg bg-[#131e18] border border-[#1b2b23] flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-emerald-500 text-slate-950 flex items-center justify-center font-label-sm text-label-sm font-bold shadow-[0_0_8px_rgba(16,185,129,0.4)]">
+                  02
+                </div>
+<div>
+<div class="font-label-md text-label-md font-bold text-slate-100 flex items-center gap-1.5">
+                    Truck Eco-02 • Elena Rostova
+                  </div>
+<div class="font-label-sm text-label-sm text-slate-400">Target: <span class="font-mono text-emerald-400 font-semibold">BIN-089</span> (Financial District)</div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-emerald-300 px-2.5 py-0.5 bg-emerald-950/80 border border-emerald-500/40 rounded-full">En Route</span>
+</div>
+<!-- Truck Eco-03 -->
+<div class="hover-glow-row p-space-sm rounded-lg bg-[#131e18] border border-[#1b2b23] flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-emerald-500 text-slate-950 flex items-center justify-center font-label-sm text-label-sm font-bold shadow-[0_0_8px_rgba(16,185,129,0.4)]">
+                  03
+                </div>
+<div>
+<div class="font-label-md text-label-md font-bold text-slate-100 flex items-center gap-1.5">
+                    Truck Eco-03 • Carlos Mendez
+                  </div>
+<div class="font-label-sm text-label-sm text-slate-400">Target: <span class="font-mono text-slate-300 font-semibold">Depot Refill</span> (Sector C)</div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-slate-300 px-2.5 py-0.5 bg-[#1b2b23] border border-[#24382e] rounded-full">Offloading</span>
+</div>
+<!-- Truck Eco-04 -->
+<div class="hover-glow-row p-space-sm rounded-lg bg-[#131e18] border border-[#1b2b23] flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-emerald-500 text-slate-950 flex items-center justify-center font-label-sm text-label-sm font-bold shadow-[0_0_8px_rgba(16,185,129,0.4)]">
+                  04
+                </div>
+<div>
+<div class="font-label-md text-label-md font-bold text-slate-100 flex items-center gap-1.5">
+                    Truck Eco-04 • Sarah Chen
+                  </div>
+<div class="font-label-sm text-label-sm text-slate-400">Target: <span class="font-mono text-emerald-400 font-semibold">Standby Sector B</span> (Available)</div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-bold text-emerald-300 px-2.5 py-0.5 bg-emerald-950/80 border border-emerald-500/40 rounded-full">Ready</span>
+</div>
+<!-- Truck Eco-05 -->
+<div class="hover-glow-row p-space-sm rounded-lg bg-[#131e18] border border-[#1b2b23] flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-emerald-500 text-slate-950 flex items-center justify-center font-label-sm text-label-sm font-bold shadow-[0_0_8px_rgba(16,185,129,0.4)]">
+                  05
+                </div>
+<div>
+<div class="font-label-md text-label-md font-bold text-slate-100 flex items-center gap-1.5">
+                    Truck Eco-05 • Tariq Al-Jamil
+                  </div>
+<div class="font-label-sm text-label-sm text-slate-400">Target: <span class="font-mono text-amber-400 font-semibold">BIN-042</span> (Civic Library)</div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-amber-300 px-2.5 py-0.5 bg-amber-950/70 border border-amber-500/40 rounded-full">Emptying</span>
+</div>
+<!-- Truck Eco-06 -->
+<div class="hover-glow-row p-space-sm rounded-lg bg-[#131e18] border border-[#1b2b23] flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-emerald-500 text-slate-950 flex items-center justify-center font-label-sm text-label-sm font-bold shadow-[0_0_8px_rgba(16,185,129,0.4)]">
+                  06
+                </div>
+<div>
+<div class="font-label-md text-label-md font-bold text-slate-100 flex items-center gap-1.5">
+                    Truck Eco-06 • Liam Gallagher
+                  </div>
+<div class="font-label-sm text-label-sm text-slate-400">Target: <span class="font-mono text-emerald-400 font-semibold">Standby Sector A</span> (Available)</div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-bold text-emerald-300 px-2.5 py-0.5 bg-emerald-950/80 border border-emerald-500/40 rounded-full">Ready</span>
+</div>
+</div>
+</div>
+<!-- Fleet Telemetry Heartbeat Bar -->
+<div class="mt-space-md pt-space-sm bg-[#131e18] border border-[#1b2b23] p-space-sm rounded-lg flex items-center justify-between text-slate-300 font-label-sm text-label-sm">
+<span class="flex items-center gap-1.5 text-slate-100 font-semibold">
+<span class="material-symbols-outlined text-[16px] text-emerald-400 animate-pulse">wifi_tethering</span> AVL Live Uplink
+          </span>
+<span>Latency: <strong class="text-emerald-400 font-mono">14ms</strong></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Real Interactive Modal for Dispatching Crew (Flawless Dark Mode) -->
+<div class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-space-md" id="dispatch-modal">
+<div class="bg-[#0f1713] rounded-xl border border-emerald-500/40 max-w-md w-full p-space-lg shadow-2xl shadow-emerald-950/50 transform transition-all">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm border-b border-[#1b2b23]">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-emerald-400 text-[24px]">assignment_turned_in</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-slate-100">Immediate Crew Dispatch</h3>
+</div>
+<button class="text-slate-400 hover:text-slate-100" onclick="closeDispatchModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="space-y-space-sm mb-space-lg">
+<div class="bg-[#131e18] border border-[#1b2b23] p-space-sm rounded-lg">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-slate-400">Target Bin:</span>
+<span class="font-mono font-bold text-emerald-400" id="modal-bin-id">BIN-108</span>
+</div>
+<div class="flex items-center justify-between mt-1">
+<span class="font-label-sm text-label-sm text-slate-400">Location:</span>
+<span class="font-label-sm text-label-sm font-bold text-slate-100 text-right" id="modal-bin-loc">Market Plaza South</span>
+</div>
+<div class="flex items-center justify-between mt-1">
+<span class="font-label-sm text-label-sm text-slate-400">Fill Gauge:</span>
+<span class="font-label-sm text-label-sm font-bold text-rose-400" id="modal-bin-fill">98% Overflow</span>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm font-bold text-slate-200 mb-1">Select Available Field Vehicle:</label>
+<select class="w-full bg-[#131e18] border border-[#1b2b23] text-slate-100 px-space-md py-space-sm rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" id="crew-select">
+<option value="Eco-04">Truck Eco-04 • Sarah Chen (Standby Sector B - ETA 6m)</option>
+<option value="Eco-06">Truck Eco-06 • Liam Gallagher (Standby Sector A - ETA 3m)</option>
+<option value="Eco-03">Truck Eco-03 • Carlos Mendez (Offloading at Depot - ETA 14m)</option>
+</select>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm font-bold text-slate-200 mb-1">Priority Override:</label>
+<div class="flex gap-space-xs">
+<label class="flex items-center gap-1.5 p-2 rounded-lg bg-[#131e18] border border-[#1b2b23] text-slate-200 font-label-sm text-label-sm flex-1 cursor-pointer hover:border-emerald-500/40">
+<input checked="" class="accent-emerald-500" name="priority" type="radio"/> High Urgent
+            </label>
+<label class="flex items-center gap-1.5 p-2 rounded-lg bg-[#131e18] border border-[#1b2b23] text-slate-200 font-label-sm text-label-sm flex-1 cursor-pointer hover:border-emerald-500/40">
+<input class="accent-emerald-500" name="priority" type="radio"/> Normal Queue
+            </label>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-xs border-t border-[#1b2b23]">
+<button class="px-space-md py-space-sm rounded-lg text-slate-400 hover:text-slate-100 font-label-md text-label-md font-medium" onclick="closeDispatchModal()">
+          Cancel
+        </button>
+<button class="px-space-lg py-space-sm rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-label-md text-label-md font-bold shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all" onclick="confirmDispatch()">
+          Authorize &amp; Transmit
+        </button>
+</div>
+</div>
+</div>
+<!-- Auto-Assign Confirmation Toast / Modal -->
+<div class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-space-md" id="auto-assign-dialog">
+<div class="bg-[#0f1713] rounded-xl border border-emerald-500/40 max-w-sm w-full p-space-lg shadow-2xl shadow-emerald-950/50 text-center">
+<div class="w-12 h-12 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto mb-space-sm shadow-[0_0_12px_rgba(16,185,129,0.3)]">
+<span class="material-symbols-outlined text-[28px]">smart_toy</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-slate-100">Auto-Dispatch Engine</h3>
+<p class="font-body-sm text-body-sm text-slate-400 my-space-sm">
+        System will optimize closest unassigned crews (Eco-04 &amp; Eco-06) to BIN-108 and BIN-114 based on current GPS distance matrices.
+      </p>
+<div class="flex items-center justify-center gap-space-sm mt-space-md">
+<button class="px-space-md py-space-sm rounded-lg text-slate-400 hover:text-slate-100 font-label-md text-label-md font-medium" onclick="document.getElementById('auto-assign-dialog').classList.add('hidden'); document.getElementById('auto-assign-dialog').classList.remove('flex');">Dismiss</button>
+<button class="px-space-md py-space-sm rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-label-md text-label-md font-bold shadow-[0_0_15px_rgba(16,185,129,0.4)]" onclick="executeAutoAssign()">Run Auto-Assign</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Real-time clock update
+  function updateTime() {
+    const el = document.getElementById('live-time-ticker');
+    if (el) {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const timeStr = now.toTimeString().split(' ')[0] + ' UTC';
+      el.textContent = `${dateStr} • ${timeStr}`;
+    }
+  }
+  setInterval(updateTime, 1000);
+
+  // Map Filter Button Toggle
+  function setMapFilter(filter, btn) {
+    const buttons = document.querySelectorAll('.map-filter-btn');
+    buttons.forEach(b => {
+      b.className = 'map-filter-btn px-space-md py-1 rounded-md font-label-sm text-label-sm text-slate-400 hover:text-slate-100 hover:bg-[#1b2b23] transition-all';
+    });
+    btn.className = 'map-filter-btn px-space-md py-1 rounded-md font-label-sm text-label-sm bg-emerald-500 text-slate-950 font-bold shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all';
+
+    const p108 = document.getElementById('pin-b108');
+    const p114 = document.getElementById('pin-b114');
+    const p089 = document.getElementById('pin-b089');
+
+    if (filter === 'critical') {
+      if (p108) p108.style.display = 'block';
+      if (p114) p114.style.display = 'block';
+      if (p089) p089.style.display = 'none';
+    } else if (filter === 'in-progress') {
+      if (p108) p108.style.display = 'none';
+      if (p114) p114.style.display = 'none';
+      if (p089) p089.style.display = 'block';
+    } else {
+      if (p108) p108.style.display = 'block';
+      if (p114) p114.style.display = 'block';
+      if (p089) p089.style.display = 'block';
+    }
+  }
+
+  // Smooth scroll helper
+  function scrollToAlerts() {
+    const target = document.getElementById('alerts-section');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  // Dispatch Modal logic
+  let activeDispatchBin = '';
+  function openDispatchModal(binId, location, fill) {
+    activeDispatchBin = binId;
+    document.getElementById('modal-bin-id').textContent = binId;
+    document.getElementById('modal-bin-loc').textContent = location;
+    document.getElementById('modal-bin-fill').textContent = fill + ' Overflow';
+    const modal = document.getElementById('dispatch-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function closeDispatchModal() {
+    const modal = document.getElementById('dispatch-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+
+  function confirmDispatch() {
+    const select = document.getElementById('crew-select');
+    const crewName = select.value;
+    alert(`Success: ${crewName} dispatched to ${activeDispatchBin}. Telemetry packet sent.`);
+    closeDispatchModal();
+  }
+
+  function triggerAutoAssignModal() {
+    const dialog = document.getElementById('auto-assign-dialog');
+    dialog.classList.remove('hidden');
+    dialog.classList.add('flex');
+  }
+
+  function executeAutoAssign() {
+    const dialog = document.getElementById('auto-assign-dialog');
+    dialog.classList.add('hidden');
+    dialog.classList.remove('flex');
+    alert('Optimization Complete: Assigned Eco-06 to BIN-108, and Eco-04 to BIN-114. Routes recalculated.');
+  }
+
+  function showBinModal(id, loc, fill, crew, status) {
+    openDispatchModal(id, loc, fill);
+  }
+</script></main></div></body></html>
