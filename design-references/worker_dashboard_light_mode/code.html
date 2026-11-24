@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>SmartWaste Dispatch - Worker Portal</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>
+  @layer base {
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #080E0B;
+    }
+    body {
+      overscroll-behavior: none;
+    }
+    main > :first-child {
+      margin-top: 0 !important;
+    }
+    main > :last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom Immersive Animations */
+  @keyframes pulseGlowRed {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.65), 0 0 15px rgba(239, 68, 68, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 7px rgba(239, 68, 68, 0), 0 0 25px rgba(239, 68, 68, 0.7);
+    }
+  }
+
+  @keyframes sensorGlowPulse {
+    0%, 100% {
+      filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.8)) brightness(1);
+    }
+    50% {
+      filter: drop-shadow(0 0 12px rgba(255, 100, 100, 1)) brightness(1.25);
+    }
+  }
+
+  @keyframes radarSweep {
+    0% {
+      transform: scale(0.85);
+      opacity: 0.9;
+    }
+    70% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(2.8);
+      opacity: 0;
+    }
+  }
+
+  @keyframes buttonShimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes flowGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+
+  @keyframes activeStepperGlow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7), 0 0 15px rgba(16, 185, 129, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(16, 185, 129, 0), 0 0 24px rgba(16, 185, 129, 0.8);
+    }
+  }
+
+  .badge-pulse-red {
+    animation: pulseGlowRed 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  .sensor-glow {
+    animation: sensorGlowPulse 2.2s infinite ease-in-out;
+  }
+
+  .stepper-active-pulse {
+    animation: activeStepperGlow 2s infinite;
+  }
+
+  .btn-shimmer-glow {
+    background-size: 200% auto;
+    background-image: linear-gradient(110deg, #059669 0%, #10b981 35%, #34d399 50%, #10b981 65%, #059669 100%);
+    animation: buttonShimmer 3.5s linear infinite;
+    box-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.45);
+  }
+  .btn-shimmer-glow:hover {
+    box-shadow: 0 6px 26px 0px rgba(16, 185, 129, 0.65);
+  }
+
+  .animated-stepper-line {
+    background: linear-gradient(90deg, #10b981, #34d399, #10b981);
+    background-size: 200% 100%;
+    animation: flowGradient 2.5s linear infinite;
+  }
+
+  /* Tactical Card Glass Styling */
+  .tactical-glass {
+    background: rgba(18, 30, 24, 0.88);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(52, 211, 153, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(52, 211, 153, 0.12);
+  }
+  .tactical-glass-highlight {
+    background: rgba(18, 30, 24, 0.94);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(52, 211, 153, 0.28);
+    box-shadow: 0 10px 36px 0 rgba(0, 0, 0, 0.55), 0 0 25px rgba(16, 185, 129, 0.1);
+  }
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#77db99",
+          "primary-container": "#047d45",
+          "on-primary": "#00391c",
+          "on-primary-container": "#bbffcc",
+          "secondary": "#a9d0b1",
+          "secondary-container": "#2e5038",
+          "on-secondary": "#143721",
+          "surface": "#080E0B",
+          "surface-container-lowest": "#050907",
+          "surface-container-low": "#0b1410",
+          "surface-container": "#121E18",
+          "surface-container-high": "#192820",
+          "surface-container-highest": "#22352b",
+          "on-surface": "#dee4dc",
+          "on-surface-variant": "#becabd",
+          "outline": "#889488",
+          "outline-variant": "#3e4940",
+          "error": "#ffb4ab",
+          "error-container": "#93000a",
+          "on-error-container": "#ffdad6"
+        },
+        borderRadius: {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        spacing: {
+          "space-xs": "0.25rem",
+          "space-sm": "0.5rem",
+          "space-md": "1rem",
+          "space-lg": "1.5rem",
+          "space-xl": "2rem"
+        },
+        fontFamily: {
+          "headline-sm": ["Manrope", "sans-serif"],
+          "headline-md": ["Manrope", "sans-serif"],
+          "headline-lg": ["Manrope", "sans-serif"],
+          "body-sm": ["Inter", "sans-serif"],
+          "body-md": ["Inter", "sans-serif"],
+          "body-lg": ["Inter", "sans-serif"],
+          "label-sm": ["Inter", "sans-serif"],
+          "label-md": ["Inter", "sans-serif"],
+          "label-lg": ["Inter", "sans-serif"]
+        },
+        fontSize: {
+          "headline-sm": ["1.125rem", { lineHeight: "1.6rem", fontWeight: "700" }],
+          "headline-md": ["1.375rem", { lineHeight: "1.875rem", fontWeight: "700" }],
+          "headline-lg": ["1.75rem", { lineHeight: "2.25rem", fontWeight: "700" }],
+          "body-sm": ["0.8125rem", { lineHeight: "1.15rem", fontWeight: "400" }],
+          "body-md": ["0.875rem", { lineHeight: "1.25rem", fontWeight: "400" }],
+          "body-lg": ["1rem", { lineHeight: "1.5rem", fontWeight: "400" }],
+          "label-sm": ["0.75rem", { lineHeight: "1rem", letterSpacing: "0.03em", fontWeight: "600" }],
+          "label-md": ["0.875rem", { lineHeight: "1.25rem", letterSpacing: "0.01em", fontWeight: "600" }],
+          "label-lg": ["0.9375rem", { lineHeight: "1.375rem", letterSpacing: "0.01em", fontWeight: "600" }]
+        }
+      }
+    }
+  };
+</script></head><body class="bg-[#080E0B] font-body-md text-[#dee4dc] antialiased min-h-screen flex flex-col selection:bg-emerald-500 selection:text-black"><header class="fixed top-0 left-0 right-0 z-50 bg-[#0c1511]/90 backdrop-blur-md border-b border-emerald-950/70 shadow-lg shadow-black/40"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="SmartWaste Dispatch Logo" class="h-8 w-auto object-contain drop-shadow-[0_0_8px_rgba(119,219,153,0.35)]" src="https://lh3.googleusercontent.com/aida/ALJJyrAkYMm1MhcnEzRDhkQZXN1j3_OpCx01e7jRLrlmI-pjjzqwVEc4cwUQuavDj2zKOf_BwmfAwNJbF7KRhFcCnfNhyX8rxjm_cem6nboXd19-aHr5GcJPdIIbFLxaAjihXdcImNqMcwQ5chDNQ-cU7tGVMFtsv430BKvhgrluvZL14a2feX0FHmLNP5MB65KT-QyOQmDAmImfZ_T-_Ul-6RWV3cpsYiza7HcgKHH1kdunOQ"/><div class="flex items-baseline gap-space-xs"><span class="font-headline-sm text-headline-sm font-extrabold text-emerald-400 tracking-tight drop-shadow-[0_0_12px_rgba(52,211,153,0.4)]">SmartWaste</span><span class="font-label-sm text-[10px] uppercase tracking-wider bg-emerald-950/80 text-emerald-300 font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">DISPATCH</span></div></div><nav class="hidden md:flex items-center gap-1 bg-[#121e18] p-1 rounded-lg border border-emerald-900/40"><a class="px-space-md py-1.5 rounded-md font-label-md text-label-md text-emerald-200/70 hover:text-white hover:bg-emerald-900/40 transition-all" data-path="public-dashboard" href="#">Public Dashboard</a><a aria-current="page" class="px-space-md py-1.5 rounded-md transition-all bg-emerald-500/20 text-emerald-300 font-label-md shadow-sm border border-emerald-500/40 flex items-center gap-1.5" data-path="worker-portal" href="#"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>Worker Portal</a><a class="px-space-md py-1.5 rounded-md font-label-md text-label-md text-emerald-200/70 hover:text-white hover:bg-emerald-900/40 transition-all" data-path="supervisor-console" href="#">Supervisor Console</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs px-3 py-1 bg-[#121e18] border border-emerald-500/20 rounded-full"><span class="inline-block w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"></span><span class="font-label-sm text-label-sm text-emerald-300 font-medium">Network &amp; GPS Online</span></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="text-right hidden sm:block"><div class="font-label-sm text-label-sm font-bold text-emerald-100">Field Ops Mode</div><div class="font-label-sm text-label-sm text-emerald-400/70">Citizen / Field</div></div><div class="w-8 h-8 rounded-full bg-emerald-900/80 border border-emerald-500/40 flex items-center justify-center text-emerald-300 shadow-inner"><span class="material-symbols-outlined text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 flex-1 bg-[#080E0B]"><link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
+<script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<div class="flex flex-col w-full">
+<!-- Top Operational Context Ribbon -->
+<section class="w-full bg-[#0d1612] border-b border-emerald-950/80 px-space-md sm:px-space-lg py-2.5">
+<div class="max-w-[1720px] mx-auto flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex flex-wrap items-center gap-space-sm sm:gap-space-md">
+<!-- Worker Status Pill -->
+<div class="flex items-center gap-space-xs px-3 py-1.5 bg-emerald-950/50 border border-emerald-500/40 rounded-full shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+</span>
+<span class="font-label-md text-label-md text-emerald-300 font-bold">On Duty</span>
+<span class="text-emerald-700 font-body-sm">•</span>
+<span class="font-label-md text-label-md text-emerald-200 font-medium">Shift #W-402</span>
+</div>
+<!-- Vehicle Asset -->
+<div class="flex items-center gap-space-xs px-3 py-1.5 bg-[#121E18] border border-emerald-900/60 rounded-full">
+<span class="material-symbols-outlined text-[18px] text-emerald-400" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<span class="font-label-md text-label-md text-emerald-100 font-semibold">Truck Eco-04</span>
+<span class="font-label-sm text-label-sm text-emerald-300 bg-emerald-900/60 border border-emerald-500/20 px-1.5 py-0.5 rounded font-medium">Heavy Lift</span>
+</div>
+<!-- Safety Notice Badge -->
+<div class="hidden xl:flex items-center gap-space-xs px-3 py-1.5 bg-[#121E18] border border-emerald-900/60 text-emerald-200/80 font-label-sm text-label-sm rounded-full">
+<span class="material-symbols-outlined text-[16px] text-emerald-400">sensors</span>
+<span>In-Cab Telemetry Active (2.4 GHz)</span>
+</div>
+</div>
+<!-- Route Progress Widget -->
+<div class="flex items-center gap-space-md bg-[#121E18] border border-emerald-900/60 px-space-md py-1.5 rounded-full min-w-[280px]">
+<div class="flex flex-col flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-semibold uppercase tracking-wider text-emerald-400/70">Route Progress</span>
+<span class="font-label-md text-label-md font-bold text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.3)]" id="progress-text">3 of 8 Collected (38%)</span>
+</div>
+<div class="w-full bg-[#0a110d] h-2 rounded-full overflow-hidden mt-1 border border-emerald-950">
+<div class="bg-gradient-to-r from-emerald-600 via-emerald-400 to-emerald-300 h-full rounded-full transition-all duration-500 ease-out shadow-[0_0_8px_#34d399]" id="route-progress-bar" style="width: 38%;"></div>
+</div>
+</div>
+<button class="flex items-center gap-space-xs text-emerald-300 hover:text-white font-label-sm text-label-sm font-bold bg-[#1a2c22] hover:bg-emerald-900/60 px-2.5 py-1 rounded border border-emerald-500/30 transition-all shadow-sm" id="toggle-history-btn" title="View Recent Completed Bins">
+<span class="material-symbols-outlined text-[18px]">history</span>
+<span class="hidden sm:inline">Log</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Main Split Task Workspace -->
+<div class="w-full max-w-[1720px] mx-auto px-space-md sm:px-space-lg py-space-md flex-1">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md sm:gap-space-lg items-start">
+<!-- LEFT COLUMN: Priority Spotlight & Queue (5 Cols on Large screens) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Priority Task Spotlight Card -->
+<article class="relative tactical-glass-highlight rounded-xl overflow-hidden transition-all duration-300 hover:border-emerald-400/40">
+<div class="h-1.5 w-full bg-gradient-to-r from-red-600 via-rose-500 to-red-600 shadow-[0_0_12px_rgba(239,68,68,0.7)]"></div>
+<div class="p-space-md sm:p-space-lg">
+<!-- Header Badges -->
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex flex-wrap items-center gap-space-xs">
+<!-- Pulsing alert ring around urgent badge -->
+<span class="badge-pulse-red bg-red-950/80 text-rose-300 border border-red-500 font-label-sm text-label-sm uppercase font-bold tracking-wider px-3 py-1 rounded-full flex items-center gap-1.5 backdrop-blur-md">
+<span class="material-symbols-outlined text-[15px] text-red-400 animate-pulse">warning</span>
+                  Urgent Collection
+                </span>
+<span class="bg-[#182820] text-emerald-300 border border-emerald-500/30 font-label-sm text-label-sm font-semibold px-2 py-0.5 rounded shadow-inner">Priority #1</span>
+</div>
+<div class="text-right">
+<span class="font-headline-sm text-headline-sm font-extrabold text-rose-400 drop-shadow-[0_0_10px_rgba(244,63,94,0.6)]">96%</span>
+<span class="font-label-sm text-label-sm text-rose-300/80 block uppercase -mt-0.5 font-bold tracking-wider">Critical Fill</span>
+</div>
+</div>
+<!-- Bin Identity & Title -->
+<div class="mt-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md uppercase tracking-wider text-emerald-400/70 font-bold">Target Bin</span>
+<span class="text-emerald-700 font-body-sm">•</span>
+<span class="font-label-md text-label-md text-emerald-400 font-semibold">Waste Stream: General &amp; Compact</span>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-white mt-1 tracking-tight drop-shadow-sm">
+                BIN-115 — Riverside Promenade East
+              </h1>
+<p class="font-body-md text-body-md text-emerald-200/80 mt-1 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-emerald-400" style="font-variation-settings: 'FILL' 1;">near_me</span>
+<span class="font-semibold text-white">450 m away</span> (~3 min drive via River Rd)
+              </p>
+</div>
+<!-- Visual Capacity Bar with Animated Glow -->
+<div class="mt-space-md p-space-sm bg-[#0c1611] border border-emerald-950 rounded-lg">
+<div class="flex items-center justify-between font-label-sm text-label-sm mb-1.5">
+<span class="text-emerald-300/80 font-medium">Sonic Volume Sensor Telemetry</span>
+<span class="font-bold text-rose-400">Overflow Imminent (960 L / 1000 L)</span>
+</div>
+<div class="w-full bg-[#16251d] h-2.5 rounded-full overflow-hidden p-0.5">
+<div class="sensor-glow bg-gradient-to-r from-red-600 via-rose-500 to-red-500 h-full rounded-full transition-all duration-300" style="width: 96%;"></div>
+</div>
+</div>
+<!-- Task Progression Status Stepper with Animated glowing flow -->
+<div class="mt-space-lg pt-space-md border-t border-emerald-950/80">
+<div class="font-label-sm text-label-sm uppercase tracking-wider text-emerald-400/70 font-bold mb-space-sm">
+                Execution Workflow
+              </div>
+<div class="grid grid-cols-4 gap-space-xs text-center relative">
+<!-- Base connector lines -->
+<div class="absolute top-3.5 left-6 right-6 h-0.5 bg-emerald-950/80 -z-0"></div>
+<!-- Smooth animated active connection line -->
+<div class="animated-stepper-line absolute top-3.5 left-6 w-1/3 h-0.5 -z-0 shadow-[0_0_8px_#34d399]"></div>
+<!-- Step 1: Assigned -->
+<div class="flex flex-col items-center z-10">
+<div class="w-7 h-7 rounded-full bg-emerald-600/90 text-white flex items-center justify-center border border-emerald-400/50 shadow-[0_0_8px_rgba(16,185,129,0.4)]">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+<span class="font-label-sm text-label-sm font-bold text-emerald-300 mt-1">Assigned</span>
+<span class="text-[10px] text-emerald-400/60 font-medium">09:30 AM</span>
+</div>
+<!-- Step 2: On the Way (Active with Stepper Pulse) -->
+<div class="flex flex-col items-center z-10">
+<div class="stepper-active-pulse w-7 h-7 rounded-full bg-emerald-500 text-black flex items-center justify-center font-bold ring-2 ring-emerald-300">
+<span class="material-symbols-outlined text-[16px] font-bold">local_shipping</span>
+</div>
+<span class="font-label-sm text-label-sm font-bold text-white mt-1 drop-shadow-[0_0_6px_rgba(52,211,153,0.5)]">En Route</span>
+<span class="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">Active</span>
+</div>
+<!-- Step 3: Collecting -->
+<div class="flex flex-col items-center z-10 opacity-50">
+<div class="w-7 h-7 rounded-full bg-[#16251e] text-emerald-200/60 border border-emerald-900 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+</div>
+<span class="font-label-sm text-label-sm font-medium text-emerald-200/60 mt-1">Emptying</span>
+<span class="text-[10px] text-emerald-400/40">Pending</span>
+</div>
+<!-- Step 4: Collected -->
+<div class="flex flex-col items-center z-10 opacity-50">
+<div class="w-7 h-7 rounded-full bg-[#16251e] text-emerald-200/60 border border-emerald-900 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">task_alt</span>
+</div>
+<span class="font-label-sm text-label-sm font-medium text-emerald-200/60 mt-1">Collected</span>
+<span class="text-[10px] text-emerald-400/40">Final</span>
+</div>
+</div>
+</div>
+<!-- Action CTAs -->
+<div class="mt-space-lg flex flex-col sm:flex-row gap-space-sm">
+<!-- Shimmer / breathing effect on Mark as Collected -->
+<button class="btn-shimmer-glow flex-1 hover:brightness-110 active:scale-[0.98] text-[#041e10] py-3 px-space-md rounded-lg font-label-lg text-label-lg font-black flex items-center justify-center gap-space-sm transition-all" id="mark-collected-btn">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="tracking-tight uppercase">Mark as Collected</span>
+</button>
+<button class="bg-[#16261f] hover:bg-[#1f352a] text-emerald-200 border border-emerald-500/30 py-3 px-space-md rounded-lg font-label-lg text-label-lg font-semibold flex items-center justify-center gap-space-xs shadow-md transition-all hover:border-emerald-400/60 active:scale-[0.98]" id="nav-btn">
+<span class="material-symbols-outlined text-[20px] text-emerald-400">directions</span>
+<span>Turn-by-Turn</span>
+</button>
+</div>
+<div class="hidden mt-space-sm p-space-sm bg-emerald-950/80 border border-emerald-400 text-emerald-200 rounded-lg font-label-md text-label-md flex items-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.3)]" id="collected-alert">
+<span class="material-symbols-outlined text-[18px] text-emerald-400">verified</span>
+<span>Success: BIN-115 marked emptied &amp; synchronized with Telematics. Advancing queue...</span>
+</div>
+</div>
+</article>
+<!-- Up Next: Collection Queue Section -->
+<section class="tactical-glass rounded-xl p-space-md sm:p-space-lg">
+<div class="flex items-center justify-between mb-space-md">
+<div>
+<div class="font-label-sm text-label-sm uppercase tracking-wider text-emerald-400/70 font-bold">Upcoming Stops</div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-white">Collection Queue</h2>
+</div>
+<span class="px-space-sm py-1 bg-emerald-950/80 text-emerald-300 border border-emerald-500/30 font-label-sm text-label-sm rounded-full font-bold">5 Bins Left</span>
+</div>
+<div class="flex flex-col gap-2" id="queue-container">
+<!-- Queue Item 1 with micro-animation hover -->
+<div class="p- space-sm p-2.5 rounded-lg bg-[#0e1713]/80 hover:bg-[#1a2d24] transition-all duration-200 cursor-pointer group flex items-center justify-between gap-space-sm border border-emerald-950 hover:border-emerald-500/40 hover:translate-x-1.5 hover:shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-full bg-[#182820] border border-emerald-500/30 text-emerald-400 font-label-sm text-label-sm font-bold flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  #2
+                </div>
+<div class="min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md font-bold text-white truncate group-hover:text-emerald-300 transition-colors">BIN-108</span>
+<span class="font-label-sm text-label-sm text-emerald-400/60">• 1.1 km</span>
+</div>
+<div class="font-body-sm text-body-sm text-emerald-200/70 truncate">Civic Plaza North Fountain</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-shrink-0">
+<span class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-amber-950/70 text-amber-300 border border-amber-500/40 group-hover:border-amber-400 transition-colors">88%</span>
+<span class="material-symbols-outlined text-[20px] text-emerald-600 group-hover:text-emerald-300 group-hover:translate-x-0.5 transition-all">chevron_right</span>
+</div>
+</div>
+<!-- Queue Item 2 with micro-animation hover -->
+<div class="p-2.5 rounded-lg bg-[#0e1713]/80 hover:bg-[#1a2d24] transition-all duration-200 cursor-pointer group flex items-center justify-between gap-space-sm border border-emerald-950 hover:border-emerald-500/40 hover:translate-x-1.5 hover:shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-full bg-[#182820] border border-emerald-500/30 text-emerald-400 font-label-sm text-label-sm font-bold flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  #3
+                </div>
+<div class="min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md font-bold text-white truncate group-hover:text-emerald-300 transition-colors">BIN-112</span>
+<span class="font-label-sm text-label-sm text-emerald-400/60">• 1.8 km</span>
+</div>
+<div class="font-body-sm text-body-sm text-emerald-200/70 truncate">Harbor Wharf Gate 3</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-shrink-0">
+<span class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-amber-950/70 text-amber-300 border border-amber-500/40 group-hover:border-amber-400 transition-colors">82%</span>
+<span class="material-symbols-outlined text-[20px] text-emerald-600 group-hover:text-emerald-300 group-hover:translate-x-0.5 transition-all">chevron_right</span>
+</div>
+</div>
+<!-- Queue Item 3 with micro-animation hover -->
+<div class="p-2.5 rounded-lg bg-[#0e1713]/80 hover:bg-[#1a2d24] transition-all duration-200 cursor-pointer group flex items-center justify-between gap-space-sm border border-emerald-950 hover:border-emerald-500/40 hover:translate-x-1.5 hover:shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-full bg-[#182820] border border-emerald-500/30 text-emerald-400 font-label-sm text-label-sm font-bold flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  #4
+                </div>
+<div class="min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md font-bold text-white truncate group-hover:text-emerald-300 transition-colors">BIN-121</span>
+<span class="font-label-sm text-label-sm text-emerald-400/60">• 2.4 km</span>
+</div>
+<div class="font-body-sm text-body-sm text-emerald-200/70 truncate">Botanical Gardens Pavillion</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-shrink-0">
+<span class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-emerald-950/70 text-emerald-300 border border-emerald-500/30 group-hover:border-emerald-400 transition-colors">74%</span>
+<span class="material-symbols-outlined text-[20px] text-emerald-600 group-hover:text-emerald-300 group-hover:translate-x-0.5 transition-all">chevron_right</span>
+</div>
+</div>
+<!-- Queue Item 4 with micro-animation hover -->
+<div class="p-2.5 rounded-lg bg-[#0e1713]/80 hover:bg-[#1a2d24] transition-all duration-200 cursor-pointer group flex items-center justify-between gap-space-sm border border-emerald-950 hover:border-emerald-500/40 hover:translate-x-1.5 hover:shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-full bg-[#182820] border border-emerald-500/30 text-emerald-400 font-label-sm text-label-sm font-bold flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  #5
+                </div>
+<div class="min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md font-bold text-white truncate group-hover:text-emerald-300 transition-colors">BIN-130</span>
+<span class="font-label-sm text-label-sm text-emerald-400/60">• 3.1 km</span>
+</div>
+<div class="font-body-sm text-body-sm text-emerald-200/70 truncate">Mercer Transit Hub Level 1</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-shrink-0">
+<span class="px-2.5 py-1 rounded-full text-label-sm font-bold bg-emerald-950/70 text-emerald-300 border border-emerald-500/30 group-hover:border-emerald-400 transition-colors">69%</span>
+<span class="material-symbols-outlined text-[20px] text-emerald-600 group-hover:text-emerald-300 group-hover:translate-x-0.5 transition-all">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Compact Recent Collection History Drawer/Card -->
+<section class="tactical-glass rounded-xl p-space-md" id="history-panel">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-emerald-400 text-[20px]">task_alt</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-white">Recent Collections Today</h3>
+</div>
+<span class="font-label-sm text-label-sm text-emerald-400/60">Shift Log</span>
+</div>
+<div class="space-y-2">
+<!-- Log Item 1 with hover micro-animation -->
+<div class="p-space-xs px-space-sm rounded-lg bg-[#0e1713]/80 border border-emerald-950 flex items-center justify-between hover:bg-[#192b22] hover:border-emerald-500/30 transition-all duration-200 hover:translate-x-1 cursor-default">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+<div>
+<span class="font-label-md text-label-md font-bold text-emerald-100">BIN-101</span>
+<span class="font-body-sm text-body-sm text-emerald-300/70 ml-1">Grand Market Alley</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-emerald-400/60 font-medium">09:42 AM</span>
+</div>
+<!-- Log Item 2 with hover micro-animation -->
+<div class="p-space-xs px-space-sm rounded-lg bg-[#0e1713]/80 border border-emerald-950 flex items-center justify-between hover:bg-[#192b22] hover:border-emerald-500/30 transition-all duration-200 hover:translate-x-1 cursor-default">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+<div>
+<span class="font-label-md text-label-md font-bold text-emerald-100">BIN-098</span>
+<span class="font-body-sm text-body-sm text-emerald-300/70 ml-1">St. Claire Metro Exit B</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-emerald-400/60 font-medium">09:15 AM</span>
+</div>
+<!-- Log Item 3 with hover micro-animation -->
+<div class="p-space-xs px-space-sm rounded-lg bg-[#0e1713]/80 border border-emerald-950 flex items-center justify-between hover:bg-[#192b22] hover:border-emerald-500/30 transition-all duration-200 hover:translate-x-1 cursor-default">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+<div>
+<span class="font-label-md text-label-md font-bold text-emerald-100">BIN-094</span>
+<span class="font-body-sm text-body-sm text-emerald-300/70 ml-1">Pier 12 Cargo Berth</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-emerald-400/60 font-medium">08:50 AM</span>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN: Interactive Route Guidance Map (7 Cols on Large screens) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md lg:sticky lg:top-20">
+<!-- Map Card Container -->
+<div class="relative tactical-glass-highlight rounded-xl overflow-hidden flex flex-col border border-emerald-500/30 shadow-2xl">
+<!-- Map Header Ribbon -->
+<div class="px-space-md py-space-sm bg-[#0e1814]/90 border-b border-emerald-950 flex items-center justify-between z-10">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-emerald-400 text-[20px]">map</span>
+<span class="font-headline-sm text-headline-sm font-bold text-white tracking-tight">Live Routing Guidance</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-sm py-1 bg-[#162720] hover:bg-[#20392f] text-emerald-200 font-label-sm text-label-sm font-semibold rounded-md border border-emerald-500/30 flex items-center gap-1 shadow-sm transition-all hover:border-emerald-400 active:scale-95" id="recenter-btn">
+<span class="material-symbols-outlined text-[16px] text-emerald-400">my_location</span>
+<span>Recenter Vehicle</span>
+</button>
+<button class="px-space-sm py-1 bg-[#162720] hover:bg-[#20392f] text-emerald-200 font-label-sm text-label-sm font-semibold rounded-md border border-emerald-500/30 flex items-center gap-1 shadow-sm transition-all hover:border-emerald-400 active:scale-95" id="toggle-layer-btn">
+<span class="material-symbols-outlined text-[16px] text-emerald-400">layers</span>
+<span class="hidden sm:inline">Route Trail</span>
+</button>
+</div>
+</div>
+<!-- The Leaflet Map Canvas -->
+<div class="w-full h-[520px] lg:h-[680px] z-0 bg-[#080E0B]" id="worker-map"></div>
+<!-- Floating Guidance Overlay at Top of Map (Tactical Glass) -->
+<div class="absolute top-16 left-4 right-4 z-[400] pointer-events-none">
+<div class="bg-[#0e1813]/92 backdrop-blur-md border border-emerald-500/40 p-space-sm rounded-lg shadow-xl max-w-md pointer-events-auto flex items-center justify-between gap-space-sm shadow-black/60">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-emerald-500 text-black flex items-center justify-center flex-shrink-0 shadow-[0_0_14px_rgba(52,211,153,0.5)]">
+<span class="material-symbols-outlined text-[24px] font-bold">turn_slight_right</span>
+</div>
+<div>
+<div class="font-label-md text-label-md font-bold text-white">In 120 meters</div>
+<div class="font-body-sm text-body-sm text-emerald-200/80 truncate">Turn right onto Promenade Esplanade</div>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-label-md text-label-md font-bold text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.4)]">3 min</span>
+<span class="font-label-sm text-label-sm text-emerald-400/60 block">450 m</span>
+</div>
+</div>
+</div>
+<!-- Floating Map Legend at Bottom Left (Tactical Glass) -->
+<div class="absolute bottom-4 left-4 z-[400] bg-[#0e1813]/92 backdrop-blur-md border border-emerald-500/30 px-space-md py-1.5 rounded-lg shadow-xl pointer-events-auto flex flex-wrap items-center gap-space-md text-label-sm font-medium">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-emerald-400 inline-block shadow-[0_0_8px_#34d399]"></span>
+<span class="text-emerald-100 font-semibold">Truck Eco-04</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-rose-500 inline-block animate-pulse shadow-[0_0_8px_#f43f5e]"></span>
+<span class="text-rose-200 font-semibold">BIN-115 (Target)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-4 h-1.5 bg-gradient-to-r from-emerald-500 to-emerald-300 inline-block rounded shadow-[0_0_6px_#34d399]"></span>
+<span class="text-emerald-100 font-semibold">Optimized Trail</span>
+</div>
+</div>
+</div>
+<!-- Telematics Field Ops Advisory -->
+<div class="p-space-md tactical-glass rounded-xl flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-[20px]">cloud_sync</span>
+</div>
+<div>
+<div class="font-label-md text-label-md font-bold text-white">Autonomous Telematics Sync</div>
+<div class="font-body-sm text-body-sm text-emerald-200/70">Lidar weight differential calibrates automatically upon bin lift.</div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 font-bold px-3 py-1 rounded shadow-[0_0_10px_rgba(16,185,129,0.2)]">Sync Active</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Initialize OpenStreetMap with Leaflet in Tactical Dark Matter
+    const truckCoords = [40.7128, -74.0060];
+    const targetBinCoords = [40.7155, -74.0018];
+    const upcomingBins = [
+      { id: 'BIN-108', coords: [40.7180, -73.9985], fill: '88%' },
+      { id: 'BIN-112', coords: [40.7210, -73.9940], fill: '82%' },
+      { id: 'BIN-121', coords: [40.7245, -73.9890], fill: '74%' }
+    ];
+
+    const map = L.map('worker-map', {
+      zoomControl: false,
+      attributionControl: false
+    }).setView([40.7142, -74.0039], 15);
+
+    // High-contrast Dark Matter CartoDB tiles
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      subdomains: 'abcd'
+    }).addTo(map);
+
+    // Custom Zoom Control top-right
+    L.control.zoom({ position: 'topright' }).addTo(map);
+
+    // Truck Icon with Radar Sweep / Pulsing Ring
+    const truckHtml = `
+      <div style="position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">
+        <!-- Radar Wave 1 -->
+        <span style="position: absolute; width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle, rgba(16,185,129,0.5) 0%, rgba(16,185,129,0) 70%); animation: radarSweep 2.2s ease-out infinite;"></span>
+        <!-- Radar Wave 2 -->
+        <span style="position: absolute; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(52,211,153,0.8); animation: radarSweep 2.2s ease-out infinite 0.75s;"></span>
+        <!-- Truck Center Disc -->
+        <div style="position: relative; background: #10b981; color: #022312; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 16px #10b981, inset 0 0 4px #ffffff; border: 2.5px solid #ffffff; z-index: 10;">
+          <span class="material-symbols-outlined" style="font-size: 20px; font-weight: bold;">local_shipping</span>
+        </div>
+      </div>
+      <style>
+        @keyframes radarSweep {
+          0% { transform: scale(0.65); opacity: 0.95; }
+          70% { transform: scale(2.4); opacity: 0.15; }
+          100% { transform: scale(3.0); opacity: 0; }
+        }
+      </style>
+    `;
+    const truckIcon = L.divIcon({
+      html: truckHtml,
+      className: 'truck-tactical-marker',
+      iconSize: [44, 44],
+      iconAnchor: [22, 22]
+    });
+    const truckMarker = L.marker(truckCoords, { icon: truckIcon }).addTo(map);
+    truckMarker.bindPopup('<div style="background:#0c1511; color:#fff; padding:6px; border-radius:4px; border:1px solid #10b981;"><b style="color: #34d399;">Truck Eco-04</b><br><span style="color:#a7f3d0;">Field Speed: 24 km/h</span></div>');
+
+    // Pulsating Critical Target Bin Marker with Red Glow
+    const targetBinHtml = `
+      <div style="position: relative; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;">
+        <span style="position: absolute; width: 42px; height: 42px; background-color: #ef4444; opacity: 0.45; border-radius: 50%; animation: redTargetPing 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;"></span>
+        <div style="position: relative; width: 34px; height: 34px; background: #ef4444; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 18px rgba(239,68,68,0.9); border: 2px solid #ffffff; z-index: 5;">
+          <span class="material-symbols-outlined" style="font-size: 20px;">delete_forever</span>
+        </div>
+      </div>
+      <style>
+        @keyframes redTargetPing {
+          75%, 100% {
+            transform: scale(2.2);
+            opacity: 0;
+          }
+        }
+      </style>
+    `;
+    const targetBinIcon = L.divIcon({
+      html: targetBinHtml,
+      className: 'target-tactical-marker',
+      iconSize: [42, 42],
+      iconAnchor: [21, 21]
+    });
+    const targetMarker = L.marker(targetBinCoords, { icon: targetBinIcon }).addTo(map);
+    targetMarker.bindPopup('<div style="background:#0c1511; color:#fff; padding:6px; border-radius:4px; border:1px solid #ef4444;"><b style="color:#f87171;">BIN-115 (URGENT)</b><br>Fill: 96% Critical<br>Riverside Promenade East</div>');
+
+    // Route coordinates
+    const routeCoordinates = [
+      truckCoords,
+      [40.7135, -74.0048],
+      [40.7142, -74.0035],
+      targetBinCoords,
+      [40.7168, -74.0002],
+      upcomingBins[0].coords,
+      upcomingBins[1].coords,
+      upcomingBins[2].coords
+    ];
+
+    // Background dashed trail
+    const polyline = L.polyline(routeCoordinates, {
+      color: '#065f46',
+      weight: 6,
+      opacity: 0.8,
+      dashArray: '8, 8',
+      lineCap: 'round',
+      lineJoin: 'round'
+    }).addTo(map);
+
+    // Glowing active animated trail (Truck to Target Bin)
+    const activeGlowLeg = L.polyline([truckCoords, [40.7135, -74.0048], [40.7142, -74.0035], targetBinCoords], {
+      color: '#34d399',
+      weight: 7,
+      opacity: 0.95,
+      className: 'animated-nav-glow'
+    }).addTo(map);
+
+    // Subtle ambient glow outline behind active leg
+    L.polyline([truckCoords, [40.7135, -74.0048], [40.7142, -74.0035], targetBinCoords], {
+      color: '#10b981',
+      weight: 15,
+      opacity: 0.35,
+      lineCap: 'round',
+      lineJoin: 'round'
+    }).addTo(map);
+
+    // Inject SVG animation style for glowing pulse dash trail
+    const svgStyle = document.createElement('style');
+    svgStyle.innerHTML = `
+      .animated-nav-glow {
+        stroke-dasharray: 10, 14;
+        animation: dashGlowFlow 1.2s linear infinite;
+        filter: drop-shadow(0 0 8px rgba(52,211,153,0.9));
+      }
+      @keyframes dashGlowFlow {
+        from { stroke-dashoffset: 24; }
+        to { stroke-dashoffset: 0; }
+      }
+    `;
+    document.head.appendChild(svgStyle);
+
+    // Upcoming queue markers in dark tactical styling
+    upcomingBins.forEach((b, idx) => {
+      const qIcon = L.divIcon({
+        html: `<div style="background-color: #0f241a; color: #34d399; font-weight: 700; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #10b981; font-size: 12px; box-shadow: 0 0 10px rgba(16,185,129,0.35);">#${idx+2}</div>`,
+        className: 'queue-tactical-marker',
+        iconSize: [28, 28],
+        iconAnchor: [14, 14]
+      });
+      L.marker(b.coords, { icon: qIcon }).addTo(map).bindPopup(`<div style="background:#0c1511; color:#fff; padding:6px; border-radius:4px; border:1px solid #10b981;"><b style="color:#6ee7b7;">${b.id}</b><br>Fill: ${b.fill}</div>`);
+    });
+
+    // 2. Interactive Handlers
+    const recenterBtn = document.getElementById('recenter-btn');
+    recenterBtn.addEventListener('click', () => {
+      map.flyTo(truckCoords, 16, { animate: true, duration: 1.2 });
+    });
+
+    const markCollectedBtn = document.getElementById('mark-collected-btn');
+    const alertBox = document.getElementById('collected-alert');
+    const progressText = document.getElementById('progress-text');
+    const progressBar = document.getElementById('route-progress-bar');
+
+    markCollectedBtn.addEventListener('click', () => {
+      alertBox.classList.remove('hidden');
+      markCollectedBtn.disabled = true;
+      markCollectedBtn.classList.remove('btn-shimmer-glow');
+      markCollectedBtn.classList.add('bg-emerald-950', 'text-emerald-400', 'border', 'border-emerald-500/40', 'cursor-not-allowed');
+      markCollectedBtn.innerHTML = `
+        <span class="material-symbols-outlined text-[20px]">check_circle</span>
+        <span>Collected & Verified</span>
+      `;
+
+      progressText.textContent = "4 of 8 Collected (50%)";
+      progressBar.style.width = "50%";
+
+      setTimeout(() => {
+        map.flyTo(upcomingBins[0].coords, 16, { animate: true, duration: 1.5 });
+      }, 1200);
+    });
+
+    const navBtn = document.getElementById('nav-btn');
+    navBtn.addEventListener('click', () => {
+      map.fitBounds([truckCoords, targetBinCoords], { padding: [80, 80] });
+    });
+
+    const toggleHistoryBtn = document.getElementById('toggle-history-btn');
+    const historyPanel = document.getElementById('history-panel');
+    toggleHistoryBtn.addEventListener('click', () => {
+      historyPanel.scrollIntoView({ behavior: 'smooth' });
+      historyPanel.classList.add('ring-2', 'ring-emerald-400');
+      setTimeout(() => historyPanel.classList.remove('ring-2', 'ring-emerald-400'), 1500);
+    });
+  });
+</script></main><footer class="w-full bg-[#060c09] border-t border-emerald-950"><div class="w-full px-space-lg py-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><span class="font-label-sm text-label-sm text-emerald-400/60">© 2024 SmartWaste Municipal Telemetry Systems. All rights reserved.</span></div><div class="flex items-center gap-space-md"><span class="font-label-sm text-label-sm text-emerald-400/60">Telematics v2.4.1</span><span class="font-label-sm text-label-sm text-emerald-400/60">Active Precincts: 18</span></div></div></footer></body></html>

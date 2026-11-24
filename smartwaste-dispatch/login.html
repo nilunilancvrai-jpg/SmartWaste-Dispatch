@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071a13"><title>SmartWaste Dispatch | Sign in</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="auth-page">
+  <div class="full-map-backdrop" aria-hidden="true">
+    <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="streetGrid" width="92" height="92" patternUnits="userSpaceOnUse"><path d="M92 0H0V92" fill="none" stroke="#9ce8bd" stroke-opacity=".10" stroke-width="1"/></pattern>
+        <linearGradient id="roadGlow" x1="0" x2="1"><stop stop-color="#43d995" stop-opacity=".05"/><stop offset=".5" stop-color="#55f0a5" stop-opacity=".85"/><stop offset="1" stop-color="#43d995" stop-opacity=".05"/></linearGradient>
+      </defs>
+      <rect width="1600" height="1000" fill="url(#streetGrid)"/>
+      <g class="backdrop-roads" fill="none" stroke="#9ce8bd" stroke-opacity=".18" stroke-width="2">
+        <path d="M-80 180 C180 80 250 310 480 230 S760 70 980 190 1300 350 1690 150"/>
+        <path d="M-50 650 C190 520 320 760 540 620 S900 430 1110 570 1400 770 1680 610"/>
+        <path d="M240 -60 C330 180 180 340 360 510 S540 800 420 1080"/>
+        <path d="M820 -80 C700 170 900 330 790 510 S740 830 920 1080"/>
+        <path d="M1300 -60 C1170 190 1390 330 1240 520 S1280 830 1460 1080"/>
+      </g>
+      <g class="backdrop-routes" fill="none" stroke="url(#roadGlow)" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 18">
+        <path d="M-40 500 C220 410 250 160 520 230 S800 610 1060 500 1370 250 1650 330"/>
+        <path d="M80 900 C300 700 500 790 690 590 S1100 300 1510 480"/>
+      </g>
+      <g class="backdrop-pins" fill="#8ef3b8">
+        <g transform="translate(270 285)"><path d="M0-20c-11 0-19 8-19 19 0 14 19 34 19 34S19 13 19-1C19-12 11-20 0-20Z"/><circle r="6" fill="#0b3928"/></g>
+        <g transform="translate(1050 510)"><path d="M0-20c-11 0-19 8-19 19 0 14 19 34 19 34S19 13 19-1C19-12 11-20 0-20Z"/><circle r="6" fill="#0b3928"/></g>
+        <g transform="translate(1390 245)"><path d="M0-20c-11 0-19 8-19 19 0 14 19 34 19 34S19 13 19-1C19-12 11-20 0-20Z"/><circle r="6" fill="#0b3928"/></g>
+      </g>
+    </svg>
+  </div>
+  <div class="falling-leaves" aria-hidden="true">
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  </div>
+  <header class="auth-top"><a class="wordmark" href="login.html"><span class="brand-mark">♻</span><span>SmartWaste <small>DISPATCH</small></span></a><span class="secure-pill"><i></i> Secure access</span></header>
+  <main class="auth-layout">
+    <section class="auth-story">
+      <div class="eyebrow"><i></i> A cleaner city starts with one action</div>
+      <h1 class="hero-headline" aria-label="Waste smarter. Live cleaner."><span class="headline-word word-waste">Waste</span> <span class="headline-word word-smarter">smarter.</span><br><em><span class="headline-word word-live">Live</span> <span class="headline-word word-cleaner">cleaner.</span></em></h1>
+      <p>Find available bins, coordinate field collections and keep every operation moving — in one connected workspace.</p>
+      <div class="orbit-scene bin-animation" aria-hidden="true">
+        <svg class="city-map" viewBox="0 0 560 250" preserveAspectRatio="xMidYMid meet">
+          <defs><pattern id="mapGrid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#9be8bd" stroke-opacity=".09" stroke-width=".7"/></pattern></defs>
+          <rect width="560" height="250" fill="url(#mapGrid)"/>
+          <g class="map-roads" fill="none" stroke="#83dca9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M-15 185 C75 155 88 70 180 80 S300 180 390 120 485 45 575 70"/>
+            <path d="M30 260 C120 200 140 145 215 145 S340 35 430 20 510 5 570 -15"/>
+            <path d="M95 -10 C145 45 155 100 205 125 S285 205 320 260"/>
+          </g>
+          <path class="route-trace" d="M-15 185 C75 155 88 70 180 80 S300 180 390 120 485 45 575 70" fill="none" stroke="#48efa0" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 12"/>
+          <g class="map-pin pin-one"><path d="M0-12c-7 0-12 5-12 12 0 9 12 21 12 21S12 9 12 0C12-7 7-12 0-12Z"/><circle r="4" fill="#073b29"/></g>
+          <g class="map-pin pin-two"><path d="M0-12c-7 0-12 5-12 12 0 9 12 21 12 21S12 9 12 0C12-7 7-12 0-12Z"/><circle r="4" fill="#073b29"/></g>
+        </svg>
+        <div class="scene-orbit scene-orbit-one"></div>
+        <div class="scene-orbit scene-orbit-two"></div>
+        <div class="bin-stage">
+          <span class="scene-sticker sticker-pin" aria-label="Location icon"><svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+          <span class="scene-sticker sticker-leaf" aria-label="Eco icon"><svg viewBox="0 0 24 24"><path d="M20 4C11 4 5 7 5 14a6 6 0 0 0 6 6c7 0 9-7 9-16Z"/><path d="M4 21c3-5 7-8 12-11"/></svg></span>
+          <span class="scene-sticker sticker-truck" aria-label="Collection icon"><svg viewBox="0 0 24 24"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/></svg></span>
+          <span class="scene-sticker sticker-recycle" aria-label="Recycling icon"><svg viewBox="0 0 24 24"><path d="m9 4 2-2 3 5-2 1M5 9l-3 5 6 1M17 13l4 1-2 6-3-2M8 20h7"/></svg></span>
+          <span class="trash-piece trash-paper"></span>
+          <span class="trash-piece trash-leaf"></span>
+          <span class="trash-piece trash-can"></span>
+          <span class="trash-piece trash-wrapper"></span>
+          <span class="trash-piece trash-bottle"></span>
+          <span class="trash-piece trash-box"></span>
+          <span class="trash-piece trash-cup"></span>
+          <span class="trash-piece trash-cap"></span>
+          <span class="trash-piece trash-bag" aria-hidden="true"><svg viewBox="0 0 32 38"><path d="M10 5 13 2h6l3 3 5 5-3 25H8L5 10Z"/><path d="M12 5c0 5 8 5 8 0"/></svg></span>
+          <div class="dustbin">
+            <div class="bin-lid"><span></span></div>
+            <div class="bin-body">
+              <div class="bin-ridge ridge-one"></div><div class="bin-ridge ridge-two"></div>
+              <div class="bin-recycle">♻</div>
+              <div class="bin-label">SMART<br><b>WASTE</b></div>
+            </div>
+            <div class="bin-base"></div>
+          </div>
+          <span class="bin-glow"></span>
+        </div>
+        <span class="orbit-node node-a">01 · LOCATE</span>
+        <span class="orbit-node node-b">02 · COLLECT</span>
+        <span class="orbit-node node-c">03 · IMPROVE</span>
+        <span class="scene-caption">A SMALL ACTION. A CLEANER TOMORROW.</span>
+      </div>
+      <div class="story-foot"><span>PUBLIC BIN FINDER</span><span>FIELD OPERATIONS</span><span>LIVE COORDINATION</span></div>
+    </section>
+    <section class="auth-panel-wrap"><div class="auth-panel">
+      <div class="panel-kicker">SMARTWASTE ACCOUNT</div><h2>Welcome back</h2><p class="panel-subtitle">Sign in to continue to your workspace.</p>
+      <button id="googleLoginBtn" class="google-btn" type="button"><span class="google-g">G</span> Continue with Google</button>
+      <div class="auth-divider"><span>OR CONTINUE WITH EMAIL</span></div>
+      <fieldset class="role-picker" aria-label="Choose your workspace">
+        <legend>Continue as</legend>
+        <div class="role-options">
+          <button type="button" class="role-option is-active" data-role="public" aria-pressed="true">
+            <i class="ti ti-user" aria-hidden="true"></i><span>User</span>
+          </button>
+          <button type="button" class="role-option" data-role="worker" aria-pressed="false">
+            <i class="ti ti-truck" aria-hidden="true"></i><span>Worker</span>
+          </button>
+          <button type="button" class="role-option" data-role="supervisor" aria-pressed="false">
+            <i class="ti ti-shield-check" aria-hidden="true"></i><span>Supervisor</span>
+          </button>
+        </div>
+        <p id="roleHint" class="role-hint">Public users can create an account. Staff access requires an invitation for this email.</p>
+      </fieldset>
+      <form id="loginForm">
+        <label for="email">Email address</label><input id="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+        <div class="password-label"><label for="password">Password</label><a id="forgotPassword" href="reset-password.html">Forgot password?</a></div>
+        <div class="password-field"><input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" required minlength="8"><button type="button" id="togglePassword" aria-label="Show password">Show</button></div>
+        <button id="loginBtn" class="primary-btn" type="submit">Sign in <span>→</span></button>
+      </form>
+      <p id="authMessage" class="auth-message" role="status" aria-live="polite"></p>
+      <div class="signup-row">New to SmartWaste? <button id="signupBtn" type="button">Create an account</button></div>
+      <p class="access-note">Your selected workspace is checked against your verified SmartWaste account. Worker and supervisor access requires an invitation from an authorized supervisor.</p>
+    </div><div class="auth-bottom">Your session is protected by Supabase authentication.</div></section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabaseClient.js"></script><script src="js/login.js"></script>
+  <script src="js/login-intro.js"></script>
+  <script>document.getElementById('togglePassword')?.addEventListener('click',()=>{const p=document.getElementById('password'),b=document.getElementById('togglePassword');p.type=p.type==='password'?'text':'password';b.textContent=p.type==='password'?'Show':'Hide';});</script>
+</body></html>

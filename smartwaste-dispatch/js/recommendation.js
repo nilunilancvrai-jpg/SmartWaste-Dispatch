@@ -1,25 +1,15 @@
 
 window.SmartWaste = window.SmartWaste || {};
 
-// Maximum search distance: 5 km
+// Maximum distance to search for a bin
 window.SmartWaste.SEARCH_RADIUS_KM = 5;
 
-// Progressive search distances
-window.SmartWaste.SEARCH_RADII = [
-    0.5,
-    1,
-    2,
-    5
-];
-
-// Get all suitable bins within the maximum search distance
+// A bin is suitable only when its fill level is below 80%
 window.SmartWaste.getSuitableBins = function (userLocation) {
-
     const bins = window.SmartWaste.binService.getAllBins();
 
     const suitableBins = bins
         .filter(function (bin) {
-
             return (
                 bin.status === "available" &&
                 Number.isFinite(bin.fill) &&
@@ -28,35 +18,25 @@ window.SmartWaste.getSuitableBins = function (userLocation) {
                 Number.isFinite(bin.lat) &&
                 Number.isFinite(bin.lng)
             );
-
         })
         .map(function (bin) {
-
             const distanceKm =
                 window.SmartWaste.calculateDistance(
                     userLocation,
-                    {
-                        lat: bin.lat,
-                        lng: bin.lng
-                    }
+                    { lat: bin.lat, lng: bin.lng }
                 );
 
             return {
                 ...bin,
                 distanceKm: distanceKm
             };
-
         })
         .filter(function (bin) {
-
-            return (
-                Number.isFinite(bin.distanceKm) &&
-                bin.distanceKm <= window.SmartWaste.SEARCH_RADIUS_KM
-            );
-
+            return bin.distanceKm <=
+                window.SmartWaste.SEARCH_RADIUS_KM;
         });
 
-    // Sort from nearest to farthest
+    // Show the nearest suitable bin first
     suitableBins.sort(function (a, b) {
         return a.distanceKm - b.distanceKm;
     });
@@ -64,42 +44,15 @@ window.SmartWaste.getSuitableBins = function (userLocation) {
     return suitableBins;
 };
 
-
-// Find the nearest suitable bin using progressive search
+// Return the nearest suitable bin, or null if none is found
 window.SmartWaste.getRecommendedBin = function (userLocation) {
+    const bins = window.SmartWaste.getSuitableBins(userLocation);
 
-    // Get all suitable bins within 5 km
-    const suitableBins =
-        window.SmartWaste.getSuitableBins(userLocation);
-
-    // Search progressively
-    for (const radius of window.SmartWaste.SEARCH_RADII) {
-
-        // Find bins inside the current search radius
-        const nearbyBins = suitableBins.filter(function (bin) {
-
-            return bin.distanceKm <= radius;
-
-        });
-
-        // If suitable bins exist, recommend the nearest one
-        if (nearbyBins.length > 0) {
-
-            const recommendedBin = nearbyBins[0];
-
-            return {
-                ...recommendedBin,
-                searchRadiusKm: radius
-            };
-
-        }
+    if (bins.length === 0) {
+        return null;
     }
 
-    // No suitable bin found within 5 km
-    return null;
+    return bins[0];
 };
 
-
-console.log(
-    "SmartWaste: Progressive recommendation module loaded."
-);
+console.log("SmartWaste: Recommendation module loaded.");
